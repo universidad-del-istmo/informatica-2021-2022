@@ -1,0 +1,32 @@
+Ejercicio 1 (Multiplicacion inductiva):  
+
+De una definicion inductiva para multiplicar dos numeros de peano.
+
+1. a x S(b) = a + (a x b) 
+2. a x S(0) = a 
+3. S(0) x b = b 
+4. a x b = b x a 
+5. a x 2 = a + a 
+
+Ejercicio 2 (Induccion):
+ 
+Utilize el principio de induccion para demostrar que:
+a + (b + c) = (a + b) + c
+En donde a, b, c son numeros de peano y ⊕ es la suma de numeros de peano estudiada en clase.
+
+1. 0 + c = c
+2. a + 0 = a
+3. c + S(b) = S(c + b) 
+4. a + S(b) = S(a + b)
+5. a + S(c) = S(a + c) 
+
+a + (b + c) = (a + b) + c
+b = 0 
+a + (0 + c) = (a + 0) + c
+a + c = a + c
+
+b=S(0)
+a + (S(0) + c) = (a + S(0)) + c 
+a + S(0 + c) = S(a + 0) + c 
+a + S(c) = S(a) + c 
+S(a+c) = S(a + c) 
