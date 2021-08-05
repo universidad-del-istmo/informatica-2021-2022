@@ -1,0 +1,29 @@
+Universidad del Istmo
+Informatica 1
+Rodrigo Flores
+ISCC
+
+
+Ejercicio 1, Multiplicación Inductiva
+
+	Instrucciones: Definición inductiva para multiplicar dos números de peano.
+		1. n x 0 = 0
+		2. m x 0 = 0
+		3. n x S(0) = n
+		4. m x S(0) = m
+		5. n x m = m x n
+		6. n x n = n + n
+		7. m x m = m + m
+		8. n x S(m) = n + S(m x n)
+
+
+Ejercicio 2, Inducción
+
+	Instrucciones: Utilizar el principio de inducción para "a + (b + c) = (a + b) + c
+	
+	a + (b + c) = (a + b) + c =
+	S(a) + (b + c) = S(a + b + c) =
+	S(a + b + c) = a + S(b + c)=
+	a + S(b + c) = a + (b + S(c)) =
+	a + S(b + c) = a + S(b + c) == valida
+
