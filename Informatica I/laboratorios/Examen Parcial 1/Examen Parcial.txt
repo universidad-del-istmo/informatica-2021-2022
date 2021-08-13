@@ -1,0 +1,96 @@
+Pregunta 1
+Demuestre que para todo natural de peano "n" se cumple la siguiente propiedad:
+
+S u c c espacio 0 espacio más espacio n espacio igual espacio S u c c espacio n
+
+Utilize la definicion de suma  estudiada en clase como definicion del signo "+".
+
+Su respuesta:
+Definicion de suma:
+
+Cero + m = m
+n + Cero = n
+n + (Succ a) = Succ (n + a)
+
+
+Demostracion:
+Hipotesis inductiva: Succ 0 + n = Succ n
+Aplicamos Regla 3: Succ (0 + n) = Succ n
+Aplicamos Regla 2: Succ n = Succ n
+
+
+
+Pregunta 2:
+Provea una definicion inductiva para la propiedad "mayor que" (>) tal que:
+a espacio mayor que espacio b espacio abrir llaves tabla atributos alineación columna left espacio columnas 
+1.4ex fin atributos fila celda S u c c espacio 0 fin celda celda s i espacio a espacio e s espacio m a y o r 
+espacio q u e espacio b fin celda fila 0 celda d e espacio l o espacio c o n t r a r i o fin celda fin tabla cerrar
+En otras palabras, la propiedad "mayor que" es equivalente a Succ 0 si el primer valor es mayor que el 
+segundo o 0 de lo contrario. Puede utilizar el operador ">" en su definicion de la misma manera que se utiliza "+" en la definicion de suma.
+
+Su respuesta
+Cero + m = m
+n + Cero = n
+n + (Succ a) = Succ (n + a)
+
+a > b = Succ (a)
+b > a = Succ (b)
+Succ (0) > 0 = Succ (a)
+Succ (0) > 0 = Succ (b)
+a + Succ (0) = Succ (b)
+a + Succ (0) = Succ (a + b)
+
+
+Pregunta 3:
+
+Provea una definicion de las propiedades "esPar" e "esImpar" tal que:
+Se sugiere que para implementar estas propiedades, utilize la propiedad inversa en la definicion. 
+En otras palabras un numero "n" es par cuando cierto otro numero es impar y vice versa.
+
+Su respuesta:
+n es par = Succ 0 + 1
+n es impar = Succ 0 + 0
+Succ 0 +1 = n es par
+Succ 0 + 0 = n es impar
+
+Demostración
+n es par = Succ 0 +1
+Succ 0 + 1 = Succ (1)
+n es impar = Succ 0 + 0
+Succ 0 + 0 = Succ (0)
+
+Pregunta 4:
+Utilize el lenguaje de programacion Haskell para definir la propiedad "predecesor". 
+Esta propiedad debe aceptar un numero de peano y producir el predecesor del mismo. 
+En el caso de cero, utilizar cero como su predecesor.
+
+{-# LANGUAGE NoImplicitPrelude #-}
+
+module Main where
+
+import Prelude (Show, undefined)
+
+data Natural = O | Succ Natural deriving Show --Predecesor
+
+--Reglas de suma para Peano
+O + m = m 
+n + O = n 
+n + (Succ a) = Succ (n + a)
+
+--Reglas de la resta
+a < O = Succ a < O
+b < O = Succ b < O 
+a < b = a < Succ b 
+
+--Reglas para el predecesor de un número 
+Predecesor O = O 
+Predecesor 1 = O 
+O + Predecesor O = O 
+Succ O + Predecesor O = O 
+Predecesor a = Succ (Predecesor (a - 1))
+Succ O + Predecesor O = O 
+Succ (Succ a) + Predecesor a = O + Succ a
+Succ b + Predecesor a = a < b 
+Succ a + Predecesor b = b < a 
+
+main = undefined
