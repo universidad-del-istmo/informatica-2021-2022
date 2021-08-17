@@ -61,36 +61,12 @@ n + (Succ a) = Succ (n + a)
 
 
 
---Reglas de la resta
-
-a < O = Succ a < O
-
-b < O = Succ b < O 
-
-a < b = a < Succ b 
-
-
 
 --Reglas para el predecesor de un número 
 
-Predecesor O = O 
-
-Predecesor 1 = O 
-
-O + Predecesor O = O 
-
-Succ O + Predecesor O = O 
-
-Predecesor a = Succ (Predecesor (a - 1))
-
-Succ O + Predecesor O = O 
-
-Succ (Succ a) + Predecesor a = O + Succ a
-
-Succ b + Predecesor a = a < b 
-
-Succ a + Predecesor b = b < a 
-
+predecesor O = O 
+predecesor (Succ O) = O 
+predecesor (Succ n) = n 
 
 
 
