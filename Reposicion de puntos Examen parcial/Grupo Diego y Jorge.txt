@@ -51,7 +51,7 @@ esImpar (succ a) = esPar a
 
 --PREGUNTA 4 --
 
-predecesor O = O
+
 
 predecesor succ ( O ) = O
 
