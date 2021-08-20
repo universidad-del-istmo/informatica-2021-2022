@@ -53,7 +53,7 @@ esImpar (succ a) = esPar a
 
 
 
-predecesor succ ( O ) = O
+predecesor O = O
 
 predecesor succ ( a ) = a
 
