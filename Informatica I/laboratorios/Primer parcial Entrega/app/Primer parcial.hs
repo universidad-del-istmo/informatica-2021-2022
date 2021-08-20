@@ -28,7 +28,7 @@ fib (Succ (Succ a)) = fib (Succ a) + fib a
 --Definición de factorial
 factorial Cero = Succ Cero
 factorial (Succ Cero) = Succ Cero
-factorial (Succ(Succ a)) = Succ(Succ a) * factorial (Succ a) 
+factorial (Succ(Succ a)) = Succ(Succ a) * factorial (Succ a)
 
 --Fórmula del Predecesor
 predecesor Cero = Cero
