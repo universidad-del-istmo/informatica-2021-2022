@@ -1,0 +1,38 @@
+s1. n + 0 = n
+s2. 0 + m = m
+s3. n + succ a = succ(n + a)
+
+succ 0 + n = succ n
+
+Opcion 1:
+
+1) Comutatividad
+succ 0 + n = n + succ 0
+
+2) s3
+n + succ 0 = succ (n + 0)
+
+3) s1
+succ (n + 0) = succ n
+
+Opcion 2:
+
+caso base (n = 0):
+
+succ 0 + 0 = succ 0
+
+1) s1
+succ 0 + 0 = succ 0
+
+caso inductivo:
+
+H.I) succ 0 + n = succ n
+
+demostrar: succ 0 + (succ n) = succ (succ n)
+
+1) s3
+succ 0 + succ n = succ (succ 0 + n)
+
+2) H.I.
+succ (succ 0 + n) = succ (succ n)
+
