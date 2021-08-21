@@ -1,0 +1,7 @@
+esPar 0 = 1
+esPar 1 = 0
+esPar (succ a) = esImpar a
+
+esImpar 0 = 0
+esImpar 1 = 1
+esImpar (succ a) = esPar a
