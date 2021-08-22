@@ -16,6 +16,7 @@ n * O = O
 O * m = O
 n * Succ m = n + (n * m)
 
+
 --Naturales
 uno = Succ O
 dos = Succ uno 
@@ -35,3 +36,4 @@ factorial (Succ(Succ a)) = Succ(Succ a) * factorial (Succ a)
 
 main :: IO ()
 main = undefined
+
