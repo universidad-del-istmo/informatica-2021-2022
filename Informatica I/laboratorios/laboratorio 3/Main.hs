@@ -79,8 +79,8 @@ transformacionLineal ((m11, m12), (m21, m22)) (x, y) =  (matriz1, matriz2)
     --(m11  * x + m12 * y, m21 * x + m22 * y )
 
     where
-    matriz1 = m11 * x + m12 * y
-    matriz2 = m21 * x + m22 * y
+        matriz1 = m11 * x + m12 * y
+        matriz2 = m21 * x + m22 * y
 
     
 
