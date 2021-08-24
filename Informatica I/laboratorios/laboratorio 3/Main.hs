@@ -93,12 +93,20 @@ transformacionLineal ((m11, m12), (m21, m22)) (x, y) =  (matriz1, matriz2)
 -- funcion que rota el punto proveido como segundo parametro
 -- por el angulo del primer parametro. Puede aprender como
 -- se definien las matrices de rotacion aqui: https://en.wikipedia.org/wiki/Rotation_matrix
+
+
 operaciondeAngulo a = a * 2 * pi / 360
+
+-- 360 = 2 pi rad
+-- = 2 pi/360 °
 
 rotacion :: Float -> (Float, Float) -> (Float, Float)
 rotacion angulo = transformacionLineal ((coseno, senoNegativo), (seno,cosenoSda))
+
+
     where
         resultadodeAngulo = operaciondeAngulo angulo
+        
         coseno            = cos resultadodeAngulo
         senoNegativo      = -1 * sin resultadodeAngulo
         seno              = sin resultadodeAngulo
