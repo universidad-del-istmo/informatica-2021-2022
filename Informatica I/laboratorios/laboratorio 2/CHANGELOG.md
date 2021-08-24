@@ -1,4 +1,4 @@
-# Revision history for app
+# Revision history for laboratorio2
 
 ## 0.1.0.0 -- YYYY-mm-dd
 
