@@ -36,6 +36,7 @@ range n = Cons n (range (n - 1))
 agregarFinal x Nil = Cons x Nil
 agregarFinal x (Cons n ns) = Cons n (agregarFinal x ns)
 
+-- contar (Cons 1 (Cons 2 (Cons 3 Nil)))
 contar Nil = 0
 contar (Cons n ns) = 1 + contar ns
 
