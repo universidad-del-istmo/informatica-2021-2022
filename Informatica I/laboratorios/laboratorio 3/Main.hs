@@ -4,7 +4,7 @@
 module Main where
 
 import Prelude(abs, sqrt, (<), (<=), (/), (^), (+), (-), div, mod, (*), (==), (/=), (>), (>=), (&&), (||), pi, sin, cos,
-    Bool,
+    Bool (True, False),
     Float,
     undefined
     )
@@ -39,16 +39,13 @@ estaAdentro (cx, cy) radio (x, y) =
 -- posiciones decimales de presicion.
 esEquilatero :: (Float, Float) -> (Float, Float) -> (Float, Float) -> Bool
 
-esEquilatero (x1, y1) (x2, y2) (x3, y3) = ladodeabajo + ladoizquierdo - (ladoderecho + ladodeabajo) <= 0.01
+esEquilatero (x1, y1) (x2, y2) (x3, y3) =
+     abs (ladodeabajo + ladoizquierdo) - abs (ladoderecho + ladoizquierdo) <= 0.01 
 
     where
         ladodeabajo =    sqrt ((x2 - x1) ^ 2 + (y2 - y1) ^2)
         ladoizquierdo =  sqrt ((x1 - x3) ^ 2 + (y1 - y3) ^2)
         ladoderecho =    sqrt ((x3 - x2) ^ 2 + (y3 - y2) ^2)
-
--- (sqrt ((x2 - x1) ^ 2 + (y2 - y1) ^2) + sqrt ((x1 - x3) ^ 2 + (y1 - y3) ^2)) - (sqrt ((x3 - x2) ^ 2 + (y3 - y2) ^2) + sqrt ((x2 - x1) ^ 2 + (y2 - y1) ^2)) <=0.01
-
---(sqrt ((x2 - x1) ^ 2 + (y2 - y1) ^2) +  sqrt ((x1 - x3) ^ 2 + (y1 - y3) ^2))  -  (sqrt ((x3 - x2) ^ 2 + (y3 - y2) ^2) +  sqrt ((x1 - x3) ^ 2 + (y1 - y3) ^2)) <=0.01
 
     --                x3
     --
@@ -82,7 +79,7 @@ transformacionLineal ((m11, m12), (m21, m22)) (x, y) =  (matriz1, matriz2)
         matriz1 = m11 * x + m12 * y
         matriz2 = m21 * x + m22 * y
 
-    
+
 
 -- Problema 4:
 -- En graficos de computadora, los objetos graficos
@@ -110,3 +107,6 @@ rotacion angulo = transformacionLineal ((coseno, senoNegativo), (seno,cosenoSda)
 
 
 main = undefined
+
+
+
