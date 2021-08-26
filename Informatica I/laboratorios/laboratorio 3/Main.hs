@@ -102,6 +102,7 @@ rotacion angulo = transformacionLineal ((coseno, senoNegativo), (seno,cosenoSda)
 
     where
         resultadodeAngulo = operaciondeAngulo angulo
+        
         coseno            = cos resultadodeAngulo
         senoNegativo      = -1 * sin resultadodeAngulo
         seno              = sin resultadodeAngulo
