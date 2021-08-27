@@ -40,7 +40,7 @@ estaAdentro (cx, cy) radio (x, y) =
 
 esEquilatero :: (Float, Float) -> (Float, Float) -> (Float, Float) -> Bool
 
-esEquilatero (x1, y1) (x2, y2) (x3, y3) = ladodeabajo + ladoizquierdo - (ladoderecho + ladodeabajo) <= 0.01
+esEquilatero (x1, y1) (x2, y2) (x3, y3) = (ladodeabajo + ladoizquierdo) - (ladoderecho + ladoizquierdo) <= 0.01
 
     where
         ladodeabajo =    sqrt ((x2 - x1) ^ 2 + (y2 - y1) ^2)
