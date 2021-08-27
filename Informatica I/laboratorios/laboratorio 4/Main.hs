@@ -5,11 +5,13 @@ module Main where
 import Prelude (
     Bool(..),
     Int,
+    Float,
     Show,
     (-),
     (+),
     undefined
     )
+import GHC.Base (undefined)
 
 data Lista = Cons Int Lista | Nil deriving Show
 
@@ -38,7 +40,7 @@ data ListaTransformaciones = PorSerDefinidio deriving Show
 -- todas las tranformaciones en la lista una despues de la otra
 -- actualizando el resultado cada vez que se aplica una
 -- transformacion.
-aplicarTransformaciones :: ListaTransformaciones -> (Int, Int) -> (Int, Int)
+aplicarTransformaciones :: ListaTransformaciones -> (Float, Float) -> (Float, Float)
 aplicarTransformaciones = undefined
 
 -- Problema #4
@@ -70,5 +72,7 @@ sonIguales = undefined
 -- Por ejemplo:
 -- sonEquivalentes 5 (Cons 1 (Cons 2 Nil)) (Cons 6 (Cons 7 Nil)) == True
 -- sonEquivalentes 3 (Cons 1 (Cons 2 Nil)) (Cons 6 (Cons 7 Nil)) == False 
+sonEquivalentes :: Int -> Lista -> Lista -> Bool
+sonEquivalentes = undefined
 
 main = undefined
