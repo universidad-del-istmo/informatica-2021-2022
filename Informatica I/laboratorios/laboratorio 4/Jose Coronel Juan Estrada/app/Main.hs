@@ -36,8 +36,9 @@ contar (Cons n ns) = 1 + contar ns
 -- pero en vez de tener numeros (Int) como elementos, debe
 -- tener matrices de 2x2 como las que se utilizaron en el
 -- laboratorio anterior.
-data ListaTransformaciones = PorSerDefinidio deriving Show
+data ListaTransformaciones = Conss ((Float, Float), (Float, Float)) (Float, Float) | Nill deriving Show
 
+--FALTA PROBAR
 
 
 -- Problema #3
