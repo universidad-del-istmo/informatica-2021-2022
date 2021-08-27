@@ -5,3 +5,4 @@
 *.out
 *.gz
 dist*
+.DS_Store
