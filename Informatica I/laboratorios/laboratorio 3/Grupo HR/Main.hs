@@ -21,6 +21,12 @@ import Prelude(
 -- o False de lo contrario.
 estaAdentro :: (Float, Float) -> Float -> (Float, Float) -> Bool
 estaAdentro (cx, cy) radio (x, y) = undefined
+estaAdentro (cx, cy) radio (x, y) = (cx-x)^2 + (cy-y)^2 <= radio^2 
+
+if (x-cx)^2 + (y-cy)^2 < radio^2
+    True
+else
+    False
 
 -- Problema 2: Complete esta funcion de Haskell.
 -- Esta funcion toma 3 parametros que representan
@@ -32,6 +38,21 @@ estaAdentro (cx, cy) radio (x, y) = undefined
 -- posiciones decimales de presicion.
 esEquilatero :: (Float, Float) -> (Float, Float) -> (Float, Float) -> Bool
 esEquilatero (x1, y1) (x2, y2) (x3, y3) = undefined
+
+esEquilatero (x1, y1) (x2, y2) (x3, y3) = abs (sqrt((x2-x1)^2 + (y2-y1)^2) - sqrt((x3-x2)^2 + (y3-y2)^2)) <= 0.0001 && abs (sqrt((x3-x2)^2 + (y3-y2)^2) - sqrt((x1-x3)^2 + (y1 - y3)^2)) <= 0.0001 && abs (sqrt((x2-x1)^2 + (y2-y1)^2) - sqrt((x1-x3)^2 + (y1-y3)^2)) <= 0.0001
+
+where
+    Dis1 = abs (sqrt((x2-x1)^2 + (y2-y1)^2) - sqrt((x3-x2)^2 + (y3-y2)^2))
+    Dis2 = abs (sqrt((x3-x2)^2 + (y3-y2)^2) - sqrt((x1-x3)^2 + (y1-y3)^2))
+    Dis3 = abs (sqrt((x2-x1)^2 + (y2-y1)^2) - sqrt((x1-x3)^2 + (y1-y3)^2))
+
+    if 
+        (Dis1 - Dis2) <= 0.0001
+        (Dis2 - Dis3) <= 0.0001
+        (Dis1 - Dis3) <= 0.0001
+        True
+        else 
+            False
 
 -- Problema 3: Una transformacion lineal en un
 -- espacio de dos dimensiones se puede representar
@@ -45,6 +66,10 @@ esEquilatero (x1, y1) (x2, y2) (x3, y3) = undefined
 -- de 2x1 que representa el resultado de dicha multiplicacion.
 transformacionLineal :: ((Float, Float), (Float, Float)) -> (Float, Float) -> (Float, Float)
 transformacionLineal ((m11, m12), (m21, m22)) (x, y) = undefined
+transformacionLineal ((m11, m12), (m21, m22)) (x, y) = (M1 , M2)
+where
+M1 = (m11 * x) + (m12 * y)
+M2 = (m21 * x) + (m22 * y)
 
 -- Problema 4:
 -- En graficos de computadora, los objetos graficos
@@ -60,5 +85,12 @@ transformacionLineal ((m11, m12), (m21, m22)) (x, y) = undefined
 -- se definien las matrices de rotacion aqui: https://en.wikipedia.org/wiki/Rotation_matrix
 rotacion :: Float -> (Float, Float) -> (Float, Float)
 rotacion angulo punto = undefined
+rotacion angulo punto =  transformacionLineal ((m11, m12), (m21, m22)) punto 
 
+where
+    m11 = cos(angulo)
+    m12 = -1*sin(angulo)
+    m21 = sin(angulo)
+    m22 = cos(angulo)
+    
 main = undefined
