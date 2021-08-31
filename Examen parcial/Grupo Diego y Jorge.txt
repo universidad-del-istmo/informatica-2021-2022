@@ -1,26 +1,36 @@
 Grupo: 
 Diego Jose Giron Figueroa
-Jorge Armando Ferguson Yeaggy
+Jorge Armando Ferguson Yaeggy
+
+------------- CORRECCION DE PARCIAL ------------
 
 -- PREGUNTA 1 -- 
-Definición de suma
+demostrar la siguiente ecuacion para todo natural de peano:
+succ 0 + n = succ n
 
-a + 0 = a
+Respuesta
 
-a + 0 = 0 + a
+n + 0 = n
+0 + m = m
+n + succ a = succ (n + a)
 
-a + succ (b) = succ (a + b)
+succ 0 + 0 = succ 0
 
+con base (n = 0) 
 
-demostrar succ 0+ n = succ n
+succ 0 + 0 = succ 0
 
-succ (0) +n = succ (n)
+succ 0 + 0 = succ 0
 
-succ (0) + n = succ (0 + n)
+Caso inductivo:
 
-n + 1 = succ (n)
+H.I. succ 0 + n = succ n
 
-succ n = succ n
+succ 0 + (succ n) = succ (succ n)
+
+succ 0 + succ n = succ (succ 0 + n)
+
+succ (succ 0 + n) = succ (succ n)
 
 -- PREGUNTA 2 --
 
@@ -31,95 +41,21 @@ SUCC A > SUCC B = A > B
 
 -- PREGUNTA 3 --
 
-Definición de suma
+esPar 0 = 1
+esPar 1 = 0
+esPar (succ a) = esImpar a
 
-a + 0 = a
-
-a + 0 = 0 + a
-
-a + succ (b) = succ (a + b)
-
-
-esPar
-
-
-succ (n + 1) = succ ( succ (n))
-
-esPar n = n + succ (n + 1)
-
-n = 0
-
-esPar n = n + succ (n +1)
-
-
-esPar n = 0 + succ(0 + 1)
-
-esPar n = 0 + succ (1)
-
-esPar n = 2
-
-esImpar
-
-
-n = 1
-
-succ (n + 1) = succ ( succ (n))
-
-esImpar n = n + succ (n)
-
-esImpar n = succ (n + 1)
-
-
-esImpar n = succ (1+1)
-
-esImpar n = succ (2)
-
-esImpar n= 3
+esImpar 0 = 0
+esImpar 1 =1
+esImpar (succ a) = esPar a
 
 --PREGUNTA 4 --
 
-{-# LANGUAGE NoImplicitPrelude #-}
-
-
-
-module Main where
-
-
-
-import Prelude (Show, undefined, putStrLn)
-
-
-
-data Natural = O | Succ Natural deriving Show
-
-
-
-uno = succ (O)
-
-dos = succ ( uno)
-
-tres = succ (dos)
-
-cuatro = succ ( tres)
-
-cinco = succ (cuatro)
-
-
-
-predecesor O = O
-
 predecesor succ ( O ) = O
-
-predecesor succ (succ ( O ) ) = succ ( O )
-
-
 
 predecesor succ ( a ) = a
 
-predecesor succ ( succ ( a ) ) = succ ( a )
-
-predecesor succ ( succ ( succ ( a ))) = succ ( succ ( a ))
 
 
 
-main = putStrLn "Hello, Haskell!"
+
