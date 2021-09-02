@@ -149,7 +149,6 @@ sonIguales (Cons n ns)  (Cons a as) =
 
 
 sonEquivalentes :: Int -> Lista -> Lista -> Bool
---primero se define la suma para  las listas y ya completamos la definición
 
 sonEquivalentes  m (Cons n ns) (Cons a as) = mod n m == mod a m 
  && sonEquivalentes  m ns as 
