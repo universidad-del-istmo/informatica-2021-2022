@@ -151,14 +151,8 @@ sonIguales (Cons n ns)  (Cons a as) =
 sonEquivalentes :: Int -> Lista -> Lista -> Bool
 --primero se define la suma para  las listas y ya completamos la definición
 
---sumLista Nil = 0
---sumLista (Cons n ns) = n + sumLista ns
-
---sonEquivalentes  m (Cons n ns) (Cons a as) = mod (sumLista lista1) m  == mod (sumLista lista2) m
 sonEquivalentes  m (Cons n ns) (Cons a as) = mod n m == mod a m  
- -- where
-    --lista1 = Cons n ns 
-   -- lista2 = Cons a as 
+
 
 
 
