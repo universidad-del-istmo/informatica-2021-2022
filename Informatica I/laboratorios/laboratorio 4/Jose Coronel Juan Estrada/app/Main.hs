@@ -2,7 +2,7 @@
 
 module Main where
 
-import Prelude (Bool(..), Int, Float, Show, (-), (+), undefined)
+import Prelude (Bool(..), Int, Float, Show, (-), (+), (*), (==), undefined, mod)
 import GHC.Base (undefined)
 
 data Lista = Cons Int Lista | Nil deriving Show
@@ -17,16 +17,18 @@ contar :: Lista -> Int
 contar Nil = 0
 contar (Cons n ns) = 1 + contar ns
 
---Respuesta:
+
 -- contar (Cons 1 (Cons 2 (Cons 3 Nil)))
 -- | n = 1, ns = (Cons 2 (Cons 3 Nil))
--- 1 + contar (Cons 2 (Cons 3 Nil))
+-- = 1 + contar (Cons 2 (Cons 3 Nil))
 -- | n = 2, ns = (Cons 3 Nil)
--- 1 + 1 contar (Cons 3 Nil)
--- | n = 3, ns = Nil
--- 1 + 1 + 1 Contar Nil
+-- = 1 + 1 contar (Cons 3 NiL) 
+-- | n = 3, ns = Nil 
+-- = 1 + 1 + 1 contar Nil 
+-- | contar Nil = 0 
 -- 1 + 1 + 1 + 0
 -- = 3
+
 --FUNCIONA
 
 
@@ -36,10 +38,12 @@ contar (Cons n ns) = 1 + contar ns
 -- pero en vez de tener numeros (Int) como elementos, debe
 -- tener matrices de 2x2 como las que se utilizaron en el
 -- laboratorio anterior.
-data ListaTransformaciones = Conss ((Float, Float), (Float, Float)) (Float, Float) | Nill deriving Show
+data ListaTransformaciones = Conss ((Float, Float), (Float, Float)) ListaTransformaciones | Nill deriving Show
 
---FALTA PROBAR
+transformacionLineal :: ((Float, Float), (Float, Float)) -> (Float, Float) -> (Float, Float)
+transformacionLineal ((m11, m12), (m21, m22)) (x, y) = ((m11 * x) + (m12 * y), (m21 * x) + (m22 * y))
 
+--FUNCIONA
 
 -- Problema #3
 -- Defina una funcion llamada "aplicarTransformaciones". Esta
@@ -49,17 +53,32 @@ data ListaTransformaciones = Conss ((Float, Float), (Float, Float)) (Float, Floa
 -- actualizando el resultado cada vez que se aplica una
 -- transformacion.
 aplicarTransformaciones :: ListaTransformaciones -> (Float, Float) -> (Float, Float)
-aplicarTransformaciones = undefined
+aplicarTransformaciones Nill v = v
+aplicarTransformaciones (Conss n ns) v = aplicarTransformaciones ns (transformacionLineal n v)
 
-
+--FUNCIONA
 
 -- Problema #4
 -- Defina una funcion llamada "sonIguales". Esta funcion
 -- toma dos valores de tipo "Lista". Debe retornar "True" si
 -- ambas listas tienen los mismos valores en la misma posicion.
-sonIguales :: Lista -> Lista -> Bool
-sonIguales = undefined
+-- data Lista = Cons Int Lista | Nil deriving Show
 
+sonIguales :: Lista -> Lista -> Bool
+sonIguales Nil Nil = True
+sonIguales Nil (Cons _ _) = False
+sonIguales (Cons _ (Cons _ _)) Nil = False
+sonIguales (Cons _ Nil) Nil = False
+sonIguales (Cons n ns) (Cons x xs) =
+    if (n == x)
+    then sonIguales ns xs
+    else False
+
+--sonIguales =  --if (Cons n ns) == Cons ns
+                --then True 
+                --else False 
+
+--FUNCIONA
 
 
 -- Problema #5
@@ -83,8 +102,17 @@ sonIguales = undefined
 -- los mismos valores en modulo "m" o False de lo contrario.
 -- Por ejemplo:
 -- sonEquivalentes 5 (Cons 1 (Cons 2 Nil)) (Cons 6 (Cons 7 Nil)) == True
--- sonEquivalentes 3 (Cons 1 (Cons 2 Nil)) (Cons 6 (Cons 7 Nil)) == False 
+-- sonEquivalentes 3 (Cons 1 (Cons 2 Nil)) (Cons 6 (Cons 7 Nil)) == False
+
+sumarLista :: Lista -> Int
+sumarLista Nil = 0
+sumarLista (Cons n ns) = n + sumarLista ns
+
+
 sonEquivalentes :: Int -> Lista -> Lista -> Bool
-sonEquivalentes = undefined
+sonEquivalentes  a l1 l2 =
+    mod (sumarLista l1) a == mod (sumarLista l2) a 
+
+--FUNCIONA
 
 main = undefined
