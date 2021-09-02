@@ -19,10 +19,30 @@ import Prelude (
 -- 2) agregar n al final
 -- 3) (3 -> 2 -> 1 -> _)
 
-data Lista = Cons Int Lista | Nil deriving Show
+data Lista = Nil | Cons Int Lista deriving Show
 
+-- range 3
+-- | n = 3
+-- = Cons 3 (range (3 - 1)) = Cons 3 (range 2)
+-- | n = 2
+-- = Cons 3 (Cons 2 (range (2 - 1))) = Cons 3 (Cons 2 (range 1))
+-- | n = 1
+-- = Cons 3 (Cons 2 (Cons 1 (range (1 - 1)))) = Cons 3 (Cons 2 (Cons 1 (range 0)))
+-- = Cons 3 (Cons 2 (Cons 1 Nil))
 range 0 = Nil
 range n = Cons n (range (n - 1))
+
+-- range' 3
+-- | n = 3
+-- = Cons 3 (range' (3 + 1)) = Cons 3 (range' 4)
+-- | n = 4
+-- = Cons 3 (Cons 4 (range' (4 + 1))) = Cons 3 (Cons 4 (range' 5))
+range' 0 = Nil
+range' n = Cons n (range' (n + 1))
+
+tomar _ Nil = Nil
+tomar 0 _ = Nil
+tomar n (Cons x xs) = Cons x (tomar (n - 1) xs)
 
 -- agregarFinal 4 (Cons 1 (Cons 2 (Cons 3 Nil)))
 -- | x = 4, n = 1, ns = (Cons 2 (Cons 3 Nil))
