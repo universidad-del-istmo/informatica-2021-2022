@@ -155,8 +155,16 @@ sonEquivalentes :: Int -> Lista -> Lista -> Bool
 
 sonEquivalente m Nil Nil = True 
 
-sonEquivalentes  m (Cons n ns) (Cons a as) = mod n m == mod a m 
+sonEquivalentes  m (Cons n ns) (Cons a as) = modularListaN == modularListaA
  && sonEquivalentes   m ns as 
+
+
+
+  where 
+      modularListaN = mod n m
+      modularListaA = mod a m 
+
+
 
 
 
