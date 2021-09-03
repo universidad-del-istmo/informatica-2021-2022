@@ -104,6 +104,9 @@ aplicarTransformaciones (Consi n ns) v = aplicarTransformaciones ns (transformac
 -- toma dos valores de tipo "Lista". Debe retornar "True" si
 -- ambas listas tienen los mismos valores en la misma posicion.
 sonIguales :: Lista -> Lista -> Bool
+
+sonIguales Nil Nil = True
+
 sonIguales (Cons n ns)  (Cons a as) =
 
        listaN == listaS
@@ -150,8 +153,10 @@ sonIguales (Cons n ns)  (Cons a as) =
 
 sonEquivalentes :: Int -> Lista -> Lista -> Bool
 
+sonEquivalente m Nil Nil = True 
+
 sonEquivalentes  m (Cons n ns) (Cons a as) = mod n m == mod a m 
- && sonEquivalentes  m ns as 
+ && sonEquivalentes   m ns as 
 
 
 
