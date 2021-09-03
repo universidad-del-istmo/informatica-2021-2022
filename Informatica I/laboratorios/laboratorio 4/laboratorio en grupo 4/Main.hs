@@ -9,6 +9,10 @@ import Prelude (
     Show,
     (-),
     (+),
+    (&&),
+    (*)
+    (==),
+    mod,
     undefined
     )
 import GHC.Base (undefined)
@@ -24,6 +28,16 @@ data Lista = Cons Int Lista | Nil deriving Show
 contar :: Lista -> Int
 contar Nil = 0
 contar (Cons n ns) = 1 + contar ns
+-- Contar (Cons 1(Cons 2 (Cons 3 Nil)))
+-- n = 1, ns = (Cons 2(Cons 3 Nil))
+-- = 1 + contar (Cons 2( Cons 3 Nil))
+-- n = 2, ns = (Cons 3 Nil)
+-- = 1 + 1 + contar (Cons 3 Nil)
+-- n = 3, ns = Nil
+-- = 1 + 1 + 1 + contar Nil
+-- contar Nil = 0
+-- = 1 + 1 + 1 + 0
+-- = 3
 
 -- Problema #2
 -- Defina un nuevo tipo llamado "ListaTransformaciones". Este
@@ -31,7 +45,10 @@ contar (Cons n ns) = 1 + contar ns
 -- pero en vez de tener numeros (Int) como elementos, debe
 -- tener matrices de 2x2 como las que se utilizaron en el
 -- laboratorio anterior.
-data ListaTransformaciones = PorSerDefinidio deriving Show
+data ListaTransformaciones = Cons ((Float, Float), (Float, Float)) ListaTransformaciones | Nil deriving Show
+
+transformacionLineal :: ((Float, Float), (Float, Float)) -> (Float, Float) -> (Float, Float)
+transformacionLineal ((m11, m12), (m21, m22)) (x,y) = ((m11 * x) + (m12 * y), (m21 * x) + (m22 * y)) 
 
 -- Problema #3
 -- Defina una funcion llamada "aplicarTransformaciones". Esta
@@ -41,14 +58,23 @@ data ListaTransformaciones = PorSerDefinidio deriving Show
 -- actualizando el resultado cada vez que se aplica una
 -- transformacion.
 aplicarTransformaciones :: ListaTransformaciones -> (Float, Float) -> (Float, Float)
-aplicarTransformaciones = undefined
+aplicarTransformaciones Nil v = v
+aplicarTransformaciones (Cons n ns) = aplicarTransformaciones ns (transformacionLineal n v)
 
 -- Problema #4
 -- Defina una funcion llamada "sonIguales". Esta funcion
 -- toma dos valores de tipo "Lista". Debe retornar "True" si
 -- ambas listas tienen los mismos valores en la misma posicion.
+SumLista Nil = 0
+SumLista (Cons x xs) = x + SumLista xs
+
 sonIguales :: Lista -> Lista -> Bool
-sonIguales = undefined
+sonIguales Nil Nil = True
+sonIguales (Cons n ns) (Cons x xs) =  n == x && sonIguales ns xs
+
+if n == x
+     then sonIguales ns xs
+     else False
 
 -- Problema #5
 -- La aritmetica modular es aquella aritmetica que funciona como la
@@ -73,6 +99,14 @@ sonIguales = undefined
 -- sonEquivalentes 5 (Cons 1 (Cons 2 Nil)) (Cons 6 (Cons 7 Nil)) == True
 -- sonEquivalentes 3 (Cons 1 (Cons 2 Nil)) (Cons 6 (Cons 7 Nil)) == False 
 sonEquivalentes :: Int -> Lista -> Lista -> Bool
-sonEquivalentes = undefined
 
+aritmod:: Int -> Lista -> Lista
+aritmod m Nil = Nil
+aritmod = m (Cons n ns) = Cons (mod n m) (aritmod m ns)
+sonEquivalentes m Nil Nil = True
+sonEquivalentes m (Cons x xs) (Cons n ns) = (mod x m == mod n m) && sonEquivalentes m xs ns
+
+if mod x m == mod n m
+then sonEquivalentes m xs ns
+else False 
 main = undefined
