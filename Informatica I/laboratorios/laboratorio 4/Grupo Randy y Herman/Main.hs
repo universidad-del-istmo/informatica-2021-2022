@@ -2,15 +2,7 @@
 
 module Main where
 
-import Prelude (
-    Bool(..),
-    Int,
-    Float,
-    Show,
-    (-),
-    (+),
-    undefined
-    )
+import Prelude (Bool(..), Int, Float, Show, (-), (+), undefined)
 import GHC.Base (undefined)
 
 data Lista = Cons Int Lista | Nil deriving Show
@@ -24,6 +16,28 @@ data Lista = Cons Int Lista | Nil deriving Show
 contar :: Lista -> Int
 contar Nil = 0
 contar (Cons n ns) = 1 + contar ns
+data Lista = Cons Int Lista |  Nil deriving Show 
+
+-- contar (Cons 1 (Cons 2 (Cons 3 Nil)))
+
+-- | n = 1, ns = (Cons 2 (Cons 3 Nil))
+
+-- 1 + Contar (Cons 2 (Cons 3 Nil)))
+
+-- | n = 2, ns = (Cons 3 Nil) 
+
+-- 1 + 1 + Contar (Cons 3 Nil)
+
+-- | n = 3, ns = Nil 
+
+-- 1 + 1 + 1 + Contar (Nil)
+
+-- |n = Nil
+
+-- 1 + 1 +1 + 0
+
+-- 3
+
 
 -- Problema #2
 -- Defina un nuevo tipo llamado "ListaTransformaciones". Este
@@ -32,6 +46,10 @@ contar (Cons n ns) = 1 + contar ns
 -- tener matrices de 2x2 como las que se utilizaron en el
 -- laboratorio anterior.
 data ListaTransformaciones = PorSerDefinidio deriving Show
+
+transformacionLineal :: ((Float, Float), (Float, Float)) -> (Float, Float) -> (Float, Float)
+transformacionLineal ((m11, m12), (m21, m22)) (x, y) = ((m11 * x + m12 * y), (m21 * x + m22 * y))
+
 
 -- Problema #3
 -- Defina una funcion llamada "aplicarTransformaciones". Esta
@@ -43,12 +61,24 @@ data ListaTransformaciones = PorSerDefinidio deriving Show
 aplicarTransformaciones :: ListaTransformaciones -> (Float, Float) -> (Float, Float)
 aplicarTransformaciones = undefined
 
+plicarTransformaciones = undefined
+
+
+ + aplicarTransformaciones Nil v = v
+ + aplicarTransformaciones (Conss n ns) v = aplicarTransformaciones ns (transformacionLineal n v)
+
+
 -- Problema #4
 -- Defina una funcion llamada "sonIguales". Esta funcion
 -- toma dos valores de tipo "Lista". Debe retornar "True" si
 -- ambas listas tienen los mismos valores en la misma posicion.
 sonIguales :: Lista -> Lista -> Bool
 sonIguales = undefined
+
+aplicarTransformaciones :: ListaTransformaciones -> (Float, Float) -> (Float, Float)
+aplicarTransformaciones Nil v = v
+aplicarTransformaciones (Cons n ns) v = aplicarTransformaciones ns (transformacionLineal n v)
+
 
 -- Problema #5
 -- La aritmetica modular es aquella aritmetica que funciona como la
@@ -74,5 +104,11 @@ sonIguales = undefined
 -- sonEquivalentes 3 (Cons 1 (Cons 2 Nil)) (Cons 6 (Cons 7 Nil)) == False 
 sonEquivalentes :: Int -> Lista -> Lista -> Bool
 sonEquivalentes = undefined
+
+sumarLista :: Lista -> Int
+sumarLista Nil = 0 
+sumarLista (Cons m ms) = m + sumarLista ms
+sonEquivalentes :: Int -> Lista -> Lista -> Bool
+sonEquivalentes a x1 x2 : == mod (sumarLista x1) a == mod (sumarLista x2) a 
 
 main = undefined
