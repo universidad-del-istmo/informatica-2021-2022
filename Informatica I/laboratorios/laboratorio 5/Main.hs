@@ -2,7 +2,7 @@
 
 module Main where
 
-import Prelude (Int, Show, undefined)
+import Prelude (Int, Show, fst, undefined)
 
 data Lista = Nil | Cons Int Lista deriving Show
 
@@ -28,6 +28,8 @@ pushBack x xs =
 -- tomar una lista y un numero "n" y extraer
 -- de la lista los primeros "n" elementos
 -- que aparecen en la lista.
+-- Puede basarse en la funcion "drop" para
+-- su implementacion.
 
 -- Problema 3:
 -- Utilizar la funcion "fold" para definir
@@ -36,9 +38,9 @@ pushBack x xs =
 -- Esta funcion debe retornar el elemento
 -- ubicado en la posicion "i" de la lista.
 -- Por ejemplo:
--- elem 2 [1,2,3,4] == 3
--- elem 0 [1,2,3] == 1
--- elem 1 [1,2,3] == 2
+-- elem 2 (Cons 1 (Cons 2 (Cons 3 (Cons 4 Nil)))) == 3
+-- elem 0 (Cons 1 (Cons 2 (Cons 3 Nil))) == 1
+-- elem 1 (Cons 1 (Cons 2 (Cons 3 Nil))) == 2
 
 -- Problema 4:
 -- Utilizar la funcion "fold" para definir
@@ -47,8 +49,8 @@ pushBack x xs =
 -- lista. Debe retornar una lista donde
 -- el elemento en la posicion "i" es
 -- reemplazado por "v". POr ejemplo:
--- update 0 42 [1,2,3] == [42,2,3]
--- update 2 42 [1,2,3] == [1,2,42]
+-- update 0 42 (Cons 1 (Cons 2 (Cons 3 Nil))) == (Cons 42 (Cons 2 (Cons 3 Nil)))
+-- update 2 42 (Cons 1 (Cons 2 (Cons 3 Nil))) == (Cons 1 (Cons 2 (Cons 42 Nil)))
 
 -- Problema 5:
 -- Utilizar la funcion "fold" para definir
@@ -73,7 +75,7 @@ pushBack x xs =
 -- entero mas cercano (pero menor) a la raiz
 -- cuadrada del numero. No utilize las funciones
 -- incluidas en Haskell como "floor" y "sqrt"
--- en su definicion. Ejemplo:\
+-- en su definicion. Ejemplo:
 --
 -- raiz 9 == 3
 -- raiz 10 == 3
