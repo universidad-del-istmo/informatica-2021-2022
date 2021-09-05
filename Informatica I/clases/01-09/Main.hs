@@ -2,7 +2,11 @@
 
 module Main where
 
+<<<<<<< HEAD
 import Prelude (Int, Show, (+), (*), (-), undefined)
+=======
+import Prelude (Int, Show, (+), (*), (-), fst, undefined)
+>>>>>>> e8e7cfa7d9e2e07ea96f27e5db339a50d5f80995
 
 data Lista = Nil | Cons Int Lista deriving Show
 
@@ -64,4 +68,14 @@ reverse' xs = fold reverseAgregador Nil xs
 
 -- Utilizar fold para definir "take"
 
+<<<<<<< HEAD
+=======
+dropAgg (resultado, 0) x = (pushBack x resultado, 0)
+dropAgg (resultado, n) x = (resultado, n - 1)
+
+dropAux n xs = fold dropAgg (Nil, n) xs
+
+drop n xs = fst (dropAux n (reverse xs))
+
+>>>>>>> e8e7cfa7d9e2e07ea96f27e5db339a50d5f80995
 main = undefined
