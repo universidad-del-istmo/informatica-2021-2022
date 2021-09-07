@@ -23,7 +23,7 @@ import Prelude(
 -- representado por los primeros dos parametros
 -- o False de lo contrario.
 estaAdentro :: (Float, Float) -> Float -> (Float, Float) -> Bool
-estaAdentro (cx, cy) radio (x, y) = sqrt ((cx-x)^2 + (cy-y)^2) <= radio^2
+estaAdentro (cx, cy) radio (x, y) = sqrt ((cx-x)^2 + (cy-y)^2) <= radio
 
 -- Problema 2: Complete esta funcion de Haskell.
 -- Esta funcion toma 3 parametros que representan
