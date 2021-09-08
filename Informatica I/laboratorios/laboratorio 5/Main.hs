@@ -2,7 +2,7 @@
 
 module Main where
 
-import Prelude (Int, Show, fst, undefined)
+import Prelude (Int, Float, Bool(..), Show, (+), (-), (==), (||), (*), (>), (&&), (**), floor, fst, snd, div, mod, undefined)
 
 data Lista = Nil | Cons Int Lista deriving Show
 
@@ -68,6 +68,18 @@ pushBack x xs =
 -- Definir las funciones "maximo comun divisor"
 -- y "minimo comun multiplo" utilizando Haskell.
 
+mcdAux n m i d =
+    if n == i || m == i
+    then d
+    else if mod n (i + 1) == 0 && mod m (i + 1) == 0
+    then mcdAux n m (i + 1) (i + 1)
+    else mcdAux n m (i + 1) d
+
+mcd :: Int -> Int -> Int
+mcd n m = mcdAux n m 1 1
+
+mcm n m = undefined
+
 -- (2)
 -- Definir la funcion "raiz cuadrada" utilizando
 -- Haskell. Esta version de raiz cuadrada no
@@ -82,6 +94,28 @@ pushBack x xs =
 -- raiz 8 == 2
 -- raiz 2 == 1
 
+raizAux n i =
+    if (i + 1) * (i + 1) > n
+    then i
+    else raizAux n (i + 1)
+
+-- raiz 4
+-- = raizAux 4 1
+-- | n = 4, i = 1
+-- = if (i + 1) * (i + 1) > n then i else raizAux n (i + 1) [n/4][i/1]
+-- = if (1 + 1) * (1 + 1) > 4 then 1 else raizAux 4 (1 + 1)
+-- = if 2 * 2 > 4 then 1 else raizAux 4 2
+-- = if 4 > 4 then 1 else raizAux 4 2
+-- = raizAux 4 2
+-- | n = 4, i = 2
+-- = if (i + 1) * (i + 1) > n then i else raizAux n (i + 1) [n/4][i/2]
+-- = if (2 + 1) * (2 + 1) > 4 then 2 else raizAux 4 (2 + 1)
+-- = if 3 * 3 > 4 then 2 else raizAux 4 (2 + 1)
+-- = if 9 > 4 then 2 else raizAux 4 3
+-- = 2
+raiz :: Int -> Int
+raiz n = raizAux n 1
+
 -- (3)
 -- Definir la funcion "convertirALista" utilizando
 -- Haskell. Esta funcion toma un numero entero
@@ -90,6 +124,16 @@ pushBack x xs =
 --
 -- convertirALista 42 == Cons 4 (Cons 2 Nil)
 -- convertirALista 712 == Cons 7 (Cons 1 (Cons 2 Nil))
+
+reverse Nil = Nil
+reverse (Cons x xs) = pushBack x (reverse xs)
+
+
+convertirAListaAux 0 = Nil
+convertirAListaAux n = Cons (mod n 10) (convertirAListaAux (div n 10)) 
+
+convertirALista 0 = Cons 0 Nil
+convertirALista n = reverse (convertirAListaAux n)
 
 -- (4)
 -- Definir la funcion "convertirANumero" utilizando
@@ -102,6 +146,26 @@ pushBack x xs =
 -- convertirANumero (Cons 4 (Cons 2 Nil)) == 42
 -- convertirANumero (Cons 7 (Cons 1 (Cons 2 Nil))) == 712
 
+convertirANumeroAux p Nil = 0
+convertirANumeroAux p (Cons x xs) = x * p + convertirANumeroAux (p * 10) xs
+
+-- convertirANumero (Cons 7 (Cons 1 (Cons 2 Nil)))
+-- = convertirANumeroAux 1 (reverse xs) [xs/Cons 7 (Cons 1 (Cons 2 Nil))]
+-- = convertirANumeroAux 1 (reverse (Cons 7 (Cons 1 (Cons 2 Nil))))
+-- = convertirANumeroAux 1 (Cons 2 (Cons 1 (Cons 7 Nil)))
+-- = x * p + convertirANumeroAux (p * 10) xs [x/2, xs/Cons 1 (Cons 7 Nil), p/1]
+-- = 2 * 1 + convertirANumeroAux (1 * 10) (Cons 1 (Cons 7 Nil))
+-- = 2 * 1 + convertirANumeroAux 10 (Cons 2 (Cons 7 Nil))
+-- = 2 * 1 + x * p + convertirANumeroAux (p * 10) xs [x/1, xs/Cons 7 Nil, p/10]
+-- = 2 * 1 + 1 * 10 + convertirANumeroAux (10 * 10) (Cons 7 Nil)
+-- = 2 * 1 + 1 * 10 + convertirANumeroAux 100 (Cons 7 Nil)
+-- = 2 * 1 + 1 * 10 + x * p + convertirANumeroAux (p * 10) xs [x/7, xs/Nil, p/100]
+-- = 2 * 1 + 1 * 10 + 7 * 100 + convertirANumeroAux (100 * 10) Nil
+-- = 2 * 1 + 1 * 10 + 7 * 100 + convertirANumeroAux 1000 Nil
+-- = 2 * 1 + 1 * 10 + 7 * 100 + 0
+
+convertirANumero xs = convertirANumeroAux 1 (reverse xs)
+
 -- (5)
 -- Utilize la funcion "fold" para definir la funcion
 -- "filter". La funcion "filter" toma una funcion
@@ -112,6 +176,28 @@ pushBack x xs =
 --
 -- esMayorQue5 x = x > 5
 -- filter esMayorQue5 (Cons 4 (Cons 5 (Cons 6 (Cons 7 Nil)))) == Cons 6 (Cons 7 Nil)
+
+esMayorQue5 x = x > 5
+
+esPar n = mod n 2 == 0
+
+filterAgg (cond, xs) x =
+    if cond x
+    then (cond, Cons x xs)
+    else (cond, xs)
+
+ifThenElse True t f = t
+ifThenElse False t f = f
+
+filter cond xs = snd (fold filterAgg (cond, Nil) xs)
+
+filterAgg' cond estado x =
+    ifThenElse (cond x) (Cons x estado) estado
+
+filter' cond xs = fold (filterAgg' cond) Nil xs
+
+filter'' cond Nil = Nil
+filter'' cond (Cons x xs) = ifThenElse (cond x) (Cons x (filter'' cond xs)) (filter'' cond xs)
 
 -- (6)
 -- Defina en Haskell la funcion "existenValores". Esta
@@ -125,5 +211,12 @@ pushBack x xs =
 -- existenValores 2 (Cons 1 (Cons 2 (Cons 3 (Cons 4 Nil)))) == False
 -- existenValores 2 (Cons (-1) (Cons 2 (Cons 3 (Cons 4 Nil)))) == True
 
+existe v Nil = False
+existe v (Cons x xs) = v == x || existe v xs
+
+existenValores n Nil = False
+existenValores n (Cons x Nil) = False
+existenValores n (Cons x xs) =
+    existe (n - x) xs || existenValores n xs
 
 main = undefined
