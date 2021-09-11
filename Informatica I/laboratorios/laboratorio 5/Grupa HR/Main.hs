@@ -16,7 +16,6 @@ fold agg cero (Cons x xs) =
 -- "pushBack" definida utilizando fold.
 -- Su tarea es hacer la reduccion de:
 -- "pushBack 3 (Cons 1 (Cons 2 Nil))"
-
 pushAgregador estado x = Cons x estado
 
 pushBack x xs =
@@ -30,6 +29,22 @@ pushBack x xs =
 -- que aparecen en la lista.
 -- Puede basarse en la funcion "drop" para
 -- su implementacion.
+reverse Nil = Nil 
+ reverse (Cons x xs) = pushBack x (reverse xs)
+
+ takeAgregador (resultado, n) x = 
+     if n > 0 
+         then a
+         else y
+    where 
+        a = ((pushBack x resultado, n -1))
+        y = (resultado, n - 1)
+
+ takeAux n xs = fold (takeAgregador) (Nil, n) xs 
+
+ take' n xs = (fst (takeAux n (reverse xs)))
+
+
 
 -- Problema 3:
 -- Utilizar la funcion "fold" para definir
@@ -42,6 +57,21 @@ pushBack x xs =
 -- elem 0 (Cons 1 (Cons 2 (Cons 3 Nil))) == 1
 -- elem 1 (Cons 1 (Cons 2 (Cons 3 Nil))) == 2
 
+elemAgg (Cons x Nil) = x 
+
+ elemAgregador (resultado, n) x = 
+     if n == 0 
+         then a 
+         else b 
+
+     where 
+         a = (Cons x Nil, n - 1)
+         b = (resultado, n - 1) 
+
+ elemAux n xs = fold (elemAgregador) (Nil, n) xs
+
+ elem n xs = elemAgg (fst (elemAux n (reverse xs)))
+
 -- Problema 4:
 -- Utilizar la funcion "fold" para definir
 -- la funcion "update". Esta funcion debe
@@ -52,13 +82,35 @@ pushBack x xs =
 -- update 0 42 (Cons 1 (Cons 2 (Cons 3 Nil))) == (Cons 42 (Cons 2 (Cons 3 Nil)))
 -- update 2 42 (Cons 1 (Cons 2 (Cons 3 Nil))) == (Cons 1 (Cons 2 (Cons 42 Nil)))
 
+update :: Eq t => t -> t -> [t] -> [t]
+
+ update _ _ [] = []
+
+ update' i v  xs = 
+     map (\h -> 
+         if h == i 
+             then v 
+             else h) xs
+
+
 -- Problema 5:
 -- Utilizar la funcion "fold" para definir
 -- la funcion "map". En otras palabras,
 -- provea una definicion alterna de la
 -- funcion "map" que este definida en
 -- terminos de la funcion fold.
+map _ Nil = Nil 
+ map f (Cons x xs) = Cons (f x) (map f xs) 
 
+ map' f estado x xs = (Cons f x, estado f xs)
+
+ fold' map' estado x xs = map' (fold map' estado xs) x
+
+ --map _ Nil = Nil 
+ --map f (Cons x xs) = Cons (f x) (map f xs) 
+
+ --fold agg cero Nil = cero
+ --fold agg cero (Cons x xs) =
 -- Ejercicios de repaso:
 -- A continuacion se proveen ejercicios
 -- opcionales que puede elaborar para
@@ -81,7 +133,13 @@ pushBack x xs =
 -- raiz 10 == 3
 -- raiz 8 == 2
 -- raiz 2 == 1
-
+raizAux n i = 
+    if (i + 1) * (i + 1) > n
+        then i
+        else raizAux n (i + 1)
+    
+raiz :: Int -> Int
+raiz n = raizAux n i 
 -- (3)
 -- Definir la funcion "convertirALista" utilizando
 -- Haskell. Esta funcion toma un numero entero
@@ -90,6 +148,22 @@ pushBack x xs =
 --
 -- convertirALista 42 == Cons 4 (Cons 2 Nil)
 -- convertirALista 712 == Cons 7 (Cons 1 (Cons 2 Nil))
+
+
+reverse Nil = Nil 
+reverse (Cons x xs) = pushBack x (reverse xs)
+
+convertirAListaAuxiliar 0 = Nil
+convertirAListaAuxiliar n = Cons (mod n 10) (convertirAListaAuxiliar (div n 10 ))
+
+convertirALista 0 = Nil
+convertirALista n = reverse ( convertirAListaAuxiliar n )
+
+
+
+
+
+
 
 -- (4)
 -- Definir la funcion "convertirANumero" utilizando
@@ -101,6 +175,12 @@ pushBack x xs =
 
 -- convertirANumero (Cons 4 (Cons 2 Nil)) == 42
 -- convertirANumero (Cons 7 (Cons 1 (Cons 2 Nil))) == 712
+
+
+
+convertirANumeroAux Nil = 0 
+convertirANumeroAux (Cons x xs) = undefined
+
 
 -- (5)
 -- Utilize la funcion "fold" para definir la funcion
