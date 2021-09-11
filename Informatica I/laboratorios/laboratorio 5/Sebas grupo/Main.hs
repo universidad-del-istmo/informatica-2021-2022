@@ -2,7 +2,7 @@
 
 module Main where
 
-import Prelude (Int, Show, fst, undefined)
+import Prelude (Int, Show, fst, (->), (=), undefined)
 
 data Lista = Nil | Cons Int Lista deriving Show
 
@@ -31,6 +31,9 @@ pushBack x xs =
 -- Puede basarse en la funcion "drop" para
 -- su implementacion.
 
+take :: Int -> [a] -> [a]
+take n xs = foldr step (Cons [a]) xs n
+
 -- Problema 3:
 -- Utilizar la funcion "fold" para definir
 -- la funcion "elem". La funcion "elem" toma
@@ -42,6 +45,8 @@ pushBack x xs =
 -- elem 0 (Cons 1 (Cons 2 (Cons 3 Nil))) == 1
 -- elem 1 (Cons 1 (Cons 2 (Cons 3 Nil))) == 2
 
+
+
 -- Problema 4:
 -- Utilizar la funcion "fold" para definir
 -- la funcion "update". Esta funcion debe
@@ -52,12 +57,19 @@ pushBack x xs =
 -- update 0 42 (Cons 1 (Cons 2 (Cons 3 Nil))) == (Cons 42 (Cons 2 (Cons 3 Nil)))
 -- update 2 42 (Cons 1 (Cons 2 (Cons 3 Nil))) == (Cons 1 (Cons 2 (Cons 42 Nil)))
 
+
+
 -- Problema 5:
 -- Utilizar la funcion "fold" para definir
 -- la funcion "map". En otras palabras,
 -- provea una definicion alterna de la
 -- funcion "map" que este definida en
 -- terminos de la funcion fold.
+
+map :: (a -> b) -> [a] -> [b]
+map f [a, b] = [a, b]
+map f (x:xs) = foldr (x xs -> (f x) : xs)
+
 
 -- Ejercicios de repaso:
 -- A continuacion se proveen ejercicios
@@ -124,6 +136,9 @@ pushBack x xs =
 -- existenValores 6 (Cons 1 (Cons 2 (Cons 3 (Cons 4 Nil)))) == True
 -- existenValores 2 (Cons 1 (Cons 2 (Cons 3 (Cons 4 Nil)))) == False
 -- existenValores 2 (Cons (-1) (Cons 2 (Cons 3 (Cons 4 Nil)))) == True
+
+
+
 
 
 main = undefined
