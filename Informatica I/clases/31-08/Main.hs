@@ -2,7 +2,7 @@
 
 module Main where
 
-import Prelude (Int, Show, (+), (-), (*), undefined)
+import Prelude (Int, Show, (+), (-), (*), div, undefined)
 
 data Lista = Nil | Cons Int Lista deriving Show
 
@@ -48,5 +48,13 @@ incValores' xs = map inc xs
 dec x = x - 1
 
 decValores' xs = map dec xs
+
+invertir10 x = div 10 x
+
+invertir10Todos xs = map invertir10 xs
+
+take _ Nil = Nil
+take 0 _ = Nil
+take n (Cons x xs) = Cons x (take (n - 1) xs)
 
 main = undefined 
