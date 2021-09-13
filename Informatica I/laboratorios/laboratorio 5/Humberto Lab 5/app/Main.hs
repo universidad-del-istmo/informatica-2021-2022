@@ -2,7 +2,7 @@
 
 module Main where
 
-import Prelude (Int, Show, Float , Bool (..) , lcm, (+), (-), mod, (==), floor, (^),  (||), (*), (<), (>), (&&), (**), fst, snd,  undefined, div)
+import Prelude (Int, Show, Float , Bool (..) , fst, floor, lcm, (+), (-), mod, (==), floor, (^),  (||), (*), (<), (>), (&&), (**), fst, snd,  undefined, div)
 
 data Lista = Nil | Cons Int Lista deriving Show
 
@@ -46,8 +46,7 @@ fold agg cero (Cons x xs) =
 
 pushAgregador estado x = Cons x estado
 
-pushBack x xs =
-    fold pushAgregador (Cons x Nil) xs
+pushBack x = fold pushAgregador (Cons x Nil)
 
 -- Problema 2:
 -- Utilizar la funcion "fold" para definir
@@ -57,6 +56,31 @@ pushBack x xs =
 -- que aparecen en la lista.
 -- Puede basarse en la funcion "drop" para
 -- su implementacion.
+
+
+hReverse Nil = Nil
+
+hReverse (Cons x xs) = pushBack x (hReverse xs)
+
+
+
+takeAgregador (resultado, n) x =
+    if  n > 0
+
+         then
+        (pushBack x resultado, n - 1)
+
+        else
+        (resultado, n - 1)
+
+
+
+takeAux n = fold takeAgregador (Nil, n)
+
+hTake n xs = fst (takeAux n (hReverse xs))
+
+
+
 
 -- Problema 3:
 -- Utilizar la funcion "fold" para definir
@@ -69,6 +93,22 @@ pushBack x xs =
 -- elem 0 (Cons 1 (Cons 2 (Cons 3 Nil))) == 1
 -- elem 1 (Cons 1 (Cons 2 (Cons 3 Nil))) == 2
 
+getElem (Cons x Nil) = x
+elemAgregador (resultado, n) x =
+
+    if n == 0
+
+        then
+        (Cons x Nil, n - 1)
+
+        else
+        (resultado, n - 1)
+
+
+elemAux n xs = fold elemAgregador (Nil, n) xs
+
+hElem n xs = getElem (fst (elemAux n (hReverse xs)))
+
 -- Problema 4:
 -- Utilizar la funcion "fold" para definir
 -- la funcion "update". Esta funcion debe
@@ -79,12 +119,37 @@ pushBack x xs =
 -- update 0 42 (Cons 1 (Cons 2 (Cons 3 Nil))) == (Cons 42 (Cons 2 (Cons 3 Nil)))
 -- update 2 42 (Cons 1 (Cons 2 (Cons 3 Nil))) == (Cons 1 (Cons 2 (Cons 42 Nil)))
 
+update _ _ Nil = Nil
+
+hUpdate a c = map (\h ->
+  if h == a
+      then c
+      else h)
+
+
+
 -- Problema 5:
 -- Utilizar la funcion "fold" para definir
 -- la funcion "map". En otras palabras,
 -- provea una definicion alterna de la
 -- funcion "map" que este definida en
 -- terminos de la funcion fold.
+
+map _ Nil = Nil
+
+map a (Cons x xs) = Cons (a x) (map a xs)
+
+
+hMap a estado x xs = (Cons a x, estado a xs)
+
+hFold hMap estado x xs = hMap (fold hMap estado xs) x
+
+
+
+
+
+
+
 
 -- Ejercicios de repaso:
 -- A continuacion se proveen ejercicios
@@ -95,40 +160,19 @@ pushBack x xs =
 -- Definir las funciones "maximo comun divisor"
 -- y "minimo comun multiplo" utilizando Haskell.
 
-mcdAux n m  i d = 
-        if n == i || m == i
-        then d
-        else if mod n (i + 1)  == 0 && mod m (i + 1) == 0
-        then mcdAux n m (i + 1) (i + 1)
-        else mcdAux n m (i + 1) d 
-
-
-
-mcd :: Int -> Int -> Int
-mcd n m = mcdAux n m 1 1 
-
-
-mcm :: Int -> Int -> Int -> Int
+-- mcdAux n m i d
+ -- | n == i || m == i = d
+ -- | mod n (i + 1)  == 0 && mod m (i + 1) == 0 = mcdAux n m (i + 1) (i + 1)
+--  | otherwise = mcdAux n m (i + 1) d
 
 
 
 
-mcmDos n m l q p =
-
- if q < n || q < m || q < l then p
-
- else if mod q n == 0 && mod q m == 0 && mod q l == 0
-
- then mcmDos n m l (q - 1) q
-
- else mcmDos n m l (q - 1) p
 
 
 
-mcm n m l= mcmDos n m l multiplicaciónDe3Numeros multiplicaciónDe3Numeros
- where 
-     multiplicaciónDe3Numeros = n * m * l
-     
+
+
 
 --reducción mcm 2 3 4
 -- mcmDos 2 3 5 (2* 3 * 4)(2 * 3* 4)
@@ -187,10 +231,10 @@ mcm n m l= mcmDos n m l multiplicaciónDe3Numeros multiplicaciónDe3Numeros
 -- raiz 8 == 2
 -- raiz 2 == 1
 
-raizAux n i =
-      if (i + 1) * (i + 1) > n
-      then i
-      else raizAux n (i + 1)
+--raizAux n i =
+ --     if (i + 1) * (i + 1) > n
+  --    then i
+  --    else raizAux n (i + 1)
 
 -- raiz 4
 -- = raizAux 4 1 
@@ -206,12 +250,12 @@ raizAux n i =
 -- = if 9  > 4  then 2  else raizAux 4 (3)
 -- then 2  
 
- 
 
-raiz :: Int -> Int
-raiz n = raizAux n 1
 
-raiz´ n = floor n ** 0.5
+--raiz :: Int -> Int
+--raiz n = raizAux n 1
+
+--raiz´ n = sqrt (floor n)
 
 
 
@@ -230,16 +274,16 @@ raiz´ n = floor n ** 0.5
 --pushBack n (Cons x xs) = Cons x (pushback n xs)
 
 
-reverse Nil = Nil 
-reverse (Cons x xs) = pushBack x (reverse xs)
+--reverse Nil = Nil
+--reverse (Cons x xs) = pushBack x (reverse xs)
 
 
-convertirAListaAux 0 =  Nil 
-convertirAListaAux n = Cons (mod n 10)  (convertirAListaAux (div n 10))
+--convertirAListaAux 0 =  Nil
+--convertirAListaAux n = Cons (mod n 10)  (convertirAListaAux (div n 10))
 
 
-convertirALista 0 = Cons 0 Nil 
-convertirALista n = reverse (convertirAListaAux n)
+--convertirALista 0 = Cons 0 Nil
+--convertirALista n = reverse (convertirAListaAux n)
 
 
 
@@ -257,8 +301,8 @@ convertirALista n = reverse (convertirAListaAux n)
 -- convertirANumero (Cons 7 (Cons 1 (Cons 2 Nil))) == 712
 
 
-convertirANumeroAux p Nil = 0
-convertirANumeroAux p (Cons x xs) = x * p + convertirANumeroAux (p * 10) xs
+--convertirANumeroAux p Nil = 0
+--convertirANumeroAux p (Cons x xs) = x * p + convertirANumeroAux (p * 10) xs
 
-main = undefined  
- 
+main = undefined
+
