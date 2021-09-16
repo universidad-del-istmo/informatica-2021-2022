@@ -1,0 +1,111 @@
+--EXAMEN PARCIAL #2 
+
+
+
+-- PREGUNTA 2 
+-- Implemente en Haskell la funcion minimo comun multiplo 
+-- de tal forma que dicha funcion acepta tres numeros diferentes
+-- y retorna el minimo comun multiplo de esos tres numeros.
+-- El minimo comun multiplo es el numero mas puequeño que 
+-- simultaneamente es un multiplo de los tres numeros que 
+-- se dieron como parametro.Ejemplo:
+-- mcm3 2 5 7 == 70
+-- mcm3 3 10 15 == 30
+-- Adicionalmente, elabore la reduccion de esta funcion para 
+-- "mcm 2 3 4". Por brevedad, solo reduzca 3 recursiones.
+
+  mcmAux x y z i d =
+
+ if i < x || i < y || i < z
+ then d
+ else if mod i x == 0 && mod i y == 0 && mod i z == 0
+ then mcmAux x y z (i - 1) i
+ else mcmAux x y z (i - 1) d
+
+mcm x y z = mcmAux x y z (x * y * z) (x * y * z)
+
+--Reducción:
+--x=2 / y =3 / z=4
+
+mcm = x * y * z
+mcm (x, y, z)
+mcm (x, mcm (y, z) )
+
+
+
+
+-- PREGUNTA 4
+-- Implemente en Haskell la funcion minimo comun multiplo 
+-- de tal forma que dicha funcion acepte una lista de numeros
+-- y retorne el minimo comun multiplo de dicha lista. 
+-- El minimo comun multiplo es el numero mas puequeño que 
+-- simultaneamente es un multiplo de todos los numeros en 
+-- la lista que se dio como parametro. 
+-- Ejemplo:
+-- mcmL (Cons 2 (Cons 5 (Cons 7 Nil))) == 70
+-- mcmL (Cons 3 (Cons 10 (Cons 15 Nil))) == 30
+
+
+reverse Nil = Nil
+reverse (Cons x xs) = pushBack x (reverse xs)
+
+mcmAux :: Int -> Lista
+mcmAux 0 = Nil
+mcmAux n = Cons (mod n 10) (mcmAux (div n 10)) 
+
+
+mcm 0 = Cons 0 Nil
+mcm n = reverse (mcmAux n)
+
+
+-- O tambien: 
+
+
+data | Cons Int lista | Nil deriving show a
+Contar :: Lista -> Int 
+Contar Nil=0
+Contar (Cons m nm) 1 + contar nm
+
+mcm: Lista -> Int 
+mcmAux n m z i d
+x 1 =1 | mn 1 = 1
+then d 
+    if mcmAux n nm x ( i +1) == 0 && mcm mn (i + 1) ==0
+    then mcmAux n nm (i + 1)(i + 1)
+    else mcmAux n nm (i i + d ) d
+
+
+
+
+
+-- PREGUNTA 6 
+-- Dada la siguiente funcion "mcm" que acepta dos numeros 
+-- y produce el minimo comun multiplo de los mismos:
+-- mcmAux n m i d =
+-- if i < n || i < m
+-- then d
+-- else if mod i n == 0 && mod i m == 0
+-- then mcmAux n m (i - 1) i
+-- else mcmAux n m (i - 1) d
+-- mcm n m = mcmAux n m (n * m) (n * m)
+-- Utilize esta funcion en conjunto con la funcion "fold" 
+-- estudiada en clase para implementar nuevamente la 
+-- funcion minimo comun multiplo para listas.
+
+data Lista = Nil | Cons Int Lista deriving Show
+
+fold :: (Lista -> Int -> Lista) -> Lista -> Lista -> Lista
+fold agg cero Nil = cero
+fold agg cero (Cons x xs) =
+  agg (fold agg cero xs) x
+
+mcm :: Lista -> Int -> Lista
+mcm estado x = Cons x estado
+
+mcm :: Int -> Lista -> Lista
+mcm x xs =
+  fold mcm (Cons x Nil) xs
+
+
+
+main = undefined
