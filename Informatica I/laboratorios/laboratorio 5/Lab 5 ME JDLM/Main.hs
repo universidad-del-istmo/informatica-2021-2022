@@ -1,8 +1,8 @@
-{-# LANGUAGE NoImplicitPrelude #-}
++{-# LANGUAGE NoImplicitPrelude #-}
 
 module Main where
 
-import Prelude (Int, Float, Bool(..), Show, (+), (-), (==), (||), (*), (>), (&&), (**), floor, fst, snd, div, mod, undefined)
+import Prelude (Int, Show,Float, Bool(..), div, snd, fst, (-),(+), mod, (||), (*),(/),(^), (&&), (>),(==), undefined)
 
 data Lista = Nil | Cons Int Lista deriving Show
 
@@ -20,7 +20,26 @@ fold agg cero (Cons x xs) =
 pushAgregador estado x = Cons x estado
 
 pushBack x xs =
-    fold pushAgregador (Cons x Nil) xs
+    fold pushAgregador (Cons x Nil) xs 
+
+-- pushback 3 (Cons 1(Cons 2 Nil))
+--fold pushAgregador (Cons 3 Nil) (Cons 1(Cons 2 Nil) 
+-- | agg: pushAgregador; cero: Cons 3 Nil ; x: Cons 1 xs: Cons 2 Nil
+-- pushAgregador (fold pushAgregador (Cons 3 Nil) Cons 2 Nil) Cons 1
+-- | agg: puhsAgregador; cero: Cons 3 Nil ; x: Cons 2; xs: Nil
+-- pushAgregador pushAgregador (fold pushAgregador (Cons 3 Nil) Nil) Cons 2 Cons 1
+-- | agg: pushAgregador; cero: Cons 3 Nil; Nil / (fold pushAgregador (Cons 3 Nil) Nil = Cons 3 Nil)
+-- pushAgregador pushAgregador Cons 3 Nil Cons 2 Cons 1
+-- | estado: pushAgregador Cons 3 Nil Cons 2; x: Cons 1
+-- Cons 1 pushAgregador Cons 3 Nil Cons 2
+-- | Cons 1/ estado: Cons 3 Nil; x: Cons 2
+-- Cons 1 Cons 2 Cons 3 Nil
+-- = Cons 1(Cons 2(Cons 3 Nil) 
+
+reverseAgregador estado x = pushBack x estado
+reverse' xs = fold reverseAgregador Nil xs
+reverse Nil = Nil
+reverse (Cons x xs) = pushBack x (reverse xs)
 
 -- Problema 2:
 -- Utilizar la funcion "fold" para definir
@@ -31,6 +50,23 @@ pushBack x xs =
 -- Puede basarse en la funcion "drop" para
 -- su implementacion.
 
+--takeAgregador (x, 0) c = (Cons c x, 0)
+--takeAgregador (result, 0) x = Nil
+--takeAgregador (result, n) x = (Cons x result, n -1)  --(Cons x result, n-1) --Cons x (xs, n-1) --takeAgregador (resultado, n-1) --take n xs (takeAgregador )
+--takeAgregador (result, n) x = (result, n-1)
+-- x 
+--takeAux n  xs = fold (takeAgregador) (Nil, n) xs --fold (takeAgregador) (Nil, n-1) xs 
+-- 
+takeAgregador (resultado, 0) xs = (resultado, 0)
+takeAgregador (resultado, n) xs = (pushBack xs resultado, n-1)
+
+takeAux n xs = fold takeAgregador (Nil, n) xs
+
+
+
+take 0 Nil = Nil
+take n Nil = Nil
+take n xs = fst (takeAux n(reverse xs))
 -- Problema 3:
 -- Utilizar la funcion "fold" para definir
 -- la funcion "elem". La funcion "elem" toma
@@ -42,6 +78,22 @@ pushBack x xs =
 -- elem 0 (Cons 1 (Cons 2 (Cons 3 Nil))) == 1
 -- elem 1 (Cons 1 (Cons 2 (Cons 3 Nil))) == 2
 
+elemAgg (Cons x Nil) = x 
+
+elemAgregador (resultado, n) x = 
+    if n == 0 
+        then a 
+        else b 
+
+    where 
+        a = (Cons x Nil, n - 1)
+        b = (resultado, n - 1) 
+
+elemAux n xs = fold (elemAgregador) (Nil, n) xs
+
+elem n xs = elemAgg (fst (elemAux n (reverse xs)))
+ 
+
 -- Problema 4:
 -- Utilizar la funcion "fold" para definir
 -- la funcion "update". Esta funcion debe
@@ -52,6 +104,44 @@ pushBack x xs =
 -- update 0 42 (Cons 1 (Cons 2 (Cons 3 Nil))) == (Cons 42 (Cons 2 (Cons 3 Nil)))
 -- update 2 42 (Cons 1 (Cons 2 (Cons 3 Nil))) == (Cons 1 (Cons 2 (Cons 42 Nil)))
 
+--fold agg cero Nil = cero
+--fold agg cero (Cons x xs) =
+  --  agg (fold agg cero xs) x
+
+--updateAgg (estado i v xs )x = i (Cons x xs)
+--updateAux i v Nil = Nil 
+--updateAux i v  (Cons x xs) = 
+   -- if i == x  
+   --    then v fold updateAux 
+   -- else undefined
+
+update :: Eq t => t -> t -> [t] -> [t]
+update _ _ [] = []
+update' i v xs = 
+    map (\h -> 
+        if h == i 
+            then v 
+            else h) xs
+
+
+--elemAgg (Cons x Nil) = x 
+
+--elemAgregador (resultado, n) x = 
+   -- if n == 0 
+   --     then a 
+   --     else b 
+
+   -- where 
+        --a = (Cons x Nil, n - 1)
+       -- b = (resultado, n - 1) 
+
+--elemAux n xs = fold (elemAgregador) (Nil, n) xs
+
+--elem n xs = elemAgg (fst (elemAux n (reverse xs)))
+ 
+--FUNCIONA
+
+
 -- Problema 5:
 -- Utilizar la funcion "fold" para definir
 -- la funcion "map". En otras palabras,
@@ -59,147 +149,22 @@ pushBack x xs =
 -- funcion "map" que este definida en
 -- terminos de la funcion fold.
 
--- Ejercicios de repaso:
--- A continuacion se proveen ejercicios
--- opcionales que puede elaborar para
--- estudiar para su examen parcial:
 
--- (1)
--- Definir las funciones "maximo comun divisor"
--- y "minimo comun multiplo" utilizando Haskell.
+map _ Nil = Nil 
+map f (Cons x xs) = Cons (f x) (map f xs) 
 
-mcdAux n m i d =
-    if n == i || m == i
-    then d
-    else if mod n (i + 1) == 0 && mod m (i + 1) == 0
-    then mcdAux n m (i + 1) (i + 1)
-    else mcdAux n m (i + 1) d
+map' f estado x xs = (Cons f x, estado f xs)
 
-mcd :: Int -> Int -> Int
-mcd n m = mcdAux n m 1 1
+fold' map' estado x xs = map' (fold map' estado xs) x
 
-mcm n m = undefined
+--map _ Nil = Nil 
+--map f (Cons x xs) = Cons (f x) (map f xs) 
 
--- (2)
--- Definir la funcion "raiz cuadrada" utilizando
--- Haskell. Esta version de raiz cuadrada no
--- debe ser exacta, solo debe retornar el numero
--- entero mas cercano (pero menor) a la raiz
--- cuadrada del numero. No utilize las funciones
--- incluidas en Haskell como "floor" y "sqrt"
--- en su definicion. Ejemplo:
---
--- raiz 9 == 3
--- raiz 10 == 3
--- raiz 8 == 2
--- raiz 2 == 1
+--fold agg cero Nil = cero
+--fold agg cero (Cons x xs) =
+  --  agg (fold agg cero xs) x
+  -- (6)
 
-raizAux n i =
-    if (i + 1) * (i + 1) > n
-    then i
-    else raizAux n (i + 1)
-
--- raiz 4
--- = raizAux 4 1
--- | n = 4, i = 1
--- = if (i + 1) * (i + 1) > n then i else raizAux n (i + 1) [n/4][i/1]
--- = if (1 + 1) * (1 + 1) > 4 then 1 else raizAux 4 (1 + 1)
--- = if 2 * 2 > 4 then 1 else raizAux 4 2
--- = if 4 > 4 then 1 else raizAux 4 2
--- = raizAux 4 2
--- | n = 4, i = 2
--- = if (i + 1) * (i + 1) > n then i else raizAux n (i + 1) [n/4][i/2]
--- = if (2 + 1) * (2 + 1) > 4 then 2 else raizAux 4 (2 + 1)
--- = if 3 * 3 > 4 then 2 else raizAux 4 (2 + 1)
--- = if 9 > 4 then 2 else raizAux 4 3
--- = 2
-raiz :: Int -> Int
-raiz n = raizAux n 1
-
--- (3)
--- Definir la funcion "convertirALista" utilizando
--- Haskell. Esta funcion toma un numero entero
--- y produce una lista donde cada elemento de la misma
--- es uno de los digitos del numero. Por ejemplo:
---
--- convertirALista 42 == Cons 4 (Cons 2 Nil)
--- convertirALista 712 == Cons 7 (Cons 1 (Cons 2 Nil))
-
-reverse Nil = Nil
-reverse (Cons x xs) = pushBack x (reverse xs)
-
-
-convertirAListaAux 0 = Nil
-convertirAListaAux n = Cons (mod n 10) (convertirAListaAux (div n 10)) 
-
-convertirALista 0 = Cons 0 Nil
-convertirALista n = reverse (convertirAListaAux n)
-
--- (4)
--- Definir la funcion "convertirANumero" utilizando
--- Haskell. Esta funcion toma una lista de numeros
--- como parametro que representan los digitos de
--- un numero. Debe producir como resultado el
--- numero correspondiente. Intente definir
--- esta funcion utilizando "fold". Por ejemplo:
-
--- convertirANumero (Cons 4 (Cons 2 Nil)) == 42
--- convertirANumero (Cons 7 (Cons 1 (Cons 2 Nil))) == 712
-
-convertirANumeroAux p Nil = 0
-convertirANumeroAux p (Cons x xs) = x * p + convertirANumeroAux (p * 10) xs
-
--- convertirANumero (Cons 7 (Cons 1 (Cons 2 Nil)))
--- = convertirANumeroAux 1 (reverse xs) [xs/Cons 7 (Cons 1 (Cons 2 Nil))]
--- = convertirANumeroAux 1 (reverse (Cons 7 (Cons 1 (Cons 2 Nil))))
--- = convertirANumeroAux 1 (Cons 2 (Cons 1 (Cons 7 Nil)))
--- = x * p + convertirANumeroAux (p * 10) xs [x/2, xs/Cons 1 (Cons 7 Nil), p/1]
--- = 2 * 1 + convertirANumeroAux (1 * 10) (Cons 1 (Cons 7 Nil))
--- = 2 * 1 + convertirANumeroAux 10 (Cons 2 (Cons 7 Nil))
--- = 2 * 1 + x * p + convertirANumeroAux (p * 10) xs [x/1, xs/Cons 7 Nil, p/10]
--- = 2 * 1 + 1 * 10 + convertirANumeroAux (10 * 10) (Cons 7 Nil)
--- = 2 * 1 + 1 * 10 + convertirANumeroAux 100 (Cons 7 Nil)
--- = 2 * 1 + 1 * 10 + x * p + convertirANumeroAux (p * 10) xs [x/7, xs/Nil, p/100]
--- = 2 * 1 + 1 * 10 + 7 * 100 + convertirANumeroAux (100 * 10) Nil
--- = 2 * 1 + 1 * 10 + 7 * 100 + convertirANumeroAux 1000 Nil
--- = 2 * 1 + 1 * 10 + 7 * 100 + 0
-
-convertirANumero xs = convertirANumeroAux 1 (reverse xs)
-
--- (5)
--- Utilize la funcion "fold" para definir la funcion
--- "filter". La funcion "filter" toma una funcion
--- como parametro que representa una condicion y
--- produce una nueva lista con solamente los elementos
--- de la lista original que cumplen esa condicion.
--- Por ejemplo:
---
--- esMayorQue5 x = x > 5
--- filter esMayorQue5 (Cons 4 (Cons 5 (Cons 6 (Cons 7 Nil)))) == Cons 6 (Cons 7 Nil)
-
-esMayorQue5 x = x > 5
-
-esPar n = mod n 2 == 0
-
-filterAgg (cond, xs) x =
-    if cond x
-    then (cond, Cons x xs)
-    else (cond, xs)
-
-ifThenElse True t f = t
-ifThenElse False t f = f
-
-filter cond xs = snd (fold filterAgg (cond, Nil) xs)
-
-filterAgg' cond estado x =
-    ifThenElse (cond x) (Cons x estado) estado
-
-filter' cond xs = fold (filterAgg' cond) Nil xs
-
-filter'' cond Nil = Nil
-filter'' cond (Cons x xs) = ifThenElse (cond x) (Cons x (filter'' cond xs)) (filter'' cond xs)
-
--- (6)
 -- Defina en Haskell la funcion "existenValores". Esta
 -- funcion toma un numero "n" y una lista. Debe buscar
 -- si en la lista existen 2 numeros que al ser sumados
