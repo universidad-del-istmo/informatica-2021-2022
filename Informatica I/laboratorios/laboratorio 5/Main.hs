@@ -78,7 +78,15 @@ mcdAux n m i d =
 mcd :: Int -> Int -> Int
 mcd n m = mcdAux n m 1 1
 
-mcm n m = undefined
+
+mcmAux n m i d =
+    if i < n || i < m
+    then d
+    else if mod i n == 0 && mod i m == 0
+    then mcmAux n m (i - 1) i
+    else mcmAux n m (i - 1) d
+
+mcm n m = mcmAux n m (n * m) (n * m)
 
 -- (2)
 -- Definir la funcion "raiz cuadrada" utilizando
