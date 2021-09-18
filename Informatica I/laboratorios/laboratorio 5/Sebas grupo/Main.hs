@@ -2,7 +2,7 @@
 
 module Main where
 
-import Prelude (Int, Show, fst, (->), (=), undefined)
+import Prelude (Int, Show, fst, (->), (=),(+), (-), (*), mod, div, (||), (&&), (<), (>), (==), undefined)
 
 data Lista = Nil | Cons Int Lista deriving Show
 
@@ -137,7 +137,76 @@ map f (x:xs) = foldr (x xs -> (f x) : xs)
 -- existenValores 2 (Cons 1 (Cons 2 (Cons 3 (Cons 4 Nil)))) == False
 -- existenValores 2 (Cons (-1) (Cons 2 (Cons 3 (Cons 4 Nil)))) == True
 
+--EXAMEN PARCIAL 2: 
 
+--pregunta 2
+--Implemente en Haskell la funcion minimo comun multiplo de tal forma que dicha funcion acepta tres 
+--numeros diferentes y retorna el minimo comun multiplo de esos tres numeros. El minimo comun multiplo es
+--el numero mas puequeño que simultaneamente es un multiplo de los tres numeros que se dieron como parametro.
+
+--Ejemplo:
+--mcm3 2 5 7 == 70
+--mcm3 3 10 15 == 30
+--Adicionalmente, elabore la reduccion de esta funcion para "mcm 2 3 4". 
+--Por brevedad, solo reduzca 3 recursiones.
+
+mcmAux n m i d =
+
+ if i < n || i < m || i < o
+ then d
+ else if mod i n == 0 && mod i m == 0 && mod i o == 0
+ then mcmAux n m o (i - 1) i
+ else mcmAux n m o (i - 1) d
+
+mcm n m o = mcmAux n m o (n * m * o) (n * m * o)
+
+
+
+--pregunta 4 
+--Implemente en Haskell la funcion minimo comun multiplo de tal forma 
+--que dicha funcion acepte una lista de numeros y retorne el minimo comun multiplo 
+--de dicha lista. El minimo comun multiplo es el numero mas puequeño que simultaneamente es
+ --un multiplo de todos los numeros en la lista que se dio como parametro.
+
+--Ejemplo:
+--mcmL (Cons 2 (Cons 5 (Cons 7 Nil))) == 70
+--mcmL (Cons 3 (Cons 10 (Cons 15 Nil))) == 30
+
+data Lista = Nil | Cons Int Lista deriving Show 
+
+mcmLaux Nil a = a
+mcmLaux (Cons x xs) a = mcmLaux xs (mcm2 x a)
+mcmL li = mcmLaux li 1
+
+--mcmL (Cons x xs) = mcmLaux (Cons x xs) a
+
+
+-- pregunta 6 
+
+--Dada la siguiente funcion "mcm" que acepta dos numeros y produce 
+--el minimo comun multiplo de los mismos:
+
+mcmAux2 n m i d =
+
+ if i < n || i < m
+ then d
+ else if mod i n == 0 && mod i m == 0
+ then mcmAux2 n m (i - 1) i
+ else mcmAux2 n m (i - 1) d
+
+
+mcm2 n m = mcmAux2 n m (n * m) (n * m)
+
+--Utilize esta funcion en conjunto con la funcion "fold" estudiada en clase para
+--implementar nuevamente la funcion minimo comun multiplo para listas.
+
+fold agg cero Nil = cero
+fold agg cero (Cons x xs) =
+    agg (fold agg cero xs) x
+
+mcmAgregador estado x = mcm2 x estado 
+
+mcmfold xs = fold mcmAgregador 1 xs
 
 
 
