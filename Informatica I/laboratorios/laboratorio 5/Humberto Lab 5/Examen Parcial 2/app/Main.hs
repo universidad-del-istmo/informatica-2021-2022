@@ -7,7 +7,7 @@ import Prelude (Int, Show, Float , Bool (..) , lcm, (+), (-), mod, (==), floor, 
 data Lista = Nil | Cons Int Lista deriving Show
 
 
-
+--Examen Parcial 2 CORRECCIÓN JOSE HUMBERTO NAJAR VENAVENTE
 
 --Problema 2
 
@@ -156,7 +156,7 @@ fold agg cero (Cons x xs) =
 
 mcmAgregador estado x = mcm1 x estado
 
-mcmfold = fold mcmAgregador 1
+mcmfold = fold mcmAgregador 
 
 
 main= undefined
