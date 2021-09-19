@@ -52,11 +52,11 @@ mcmDos n m l q p =
 
 mcm n m l= mcmDos n m l multiplicaciónDe3Numeros multiplicaciónDe3Numeros
 
- where 
+ where
 
      multiplicaciónDe3Numeros = n * m * l
 
-     
+
 
 
 
@@ -75,6 +75,9 @@ mcm n m l= mcmDos n m l multiplicaciónDe3Numeros multiplicaciónDe3Numeros
 -- | else if mod q n == 0 && mod q m == 0 && mod q l == 0 [n/2, m/3, l/5]
 
 -- = else if mod q 2 == 0 && mod q 3 == 0 && mod q 5 == 0
+
+
+
 
 
 --problema 4
@@ -99,6 +102,23 @@ mcm n m l= mcmDos n m l multiplicaciónDe3Numeros multiplicaciónDe3Numeros
 
 
 
+mcmL1 Nil m = m
+mcmL1 (Cons x xs) m = mcmL1 xs (mcm1 x m)
+mcmL  num  = mcmL1 num 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 --Problema 6
 
@@ -106,23 +126,22 @@ mcm n m l= mcmDos n m l multiplicaciónDe3Numeros multiplicaciónDe3Numeros
 --que acepta dos numeros y produce el minimo 
 --comun multiplo de los mismos:
 
+mcmAux n m i d =
 
+ if i < n || i < m
 
---mcmAux n m i d =
+ then d
 
- --if i < n || i < m
+ else if mod i n == 0 && mod i m == 0
 
- --then d
+ then mcmAux n m (i - 1) i
 
- --else if mod i n == 0 && mod i m == 0
-
- --then mcmAux n m (i - 1) i
-
- --else mcmAux n m (i - 1) d
+ else mcmAux n m (i - 1) d
 
 
 
---mcm n m = mcmAux n m (n * m) (n * m)
+mcm1 n m = mcmAux n m (n * m) (n * m)
+
 
 
 
@@ -131,6 +150,28 @@ mcm n m l= mcmDos n m l multiplicaciónDe3Numeros multiplicaciónDe3Numeros
 --nuevamente la funcion minimo comun multiplo para listas.
 
 
+--fold agg cero Nil = cero
+--fold agg cero (Cons x xs) =
+ --   agg (fold agg cero xs) x
 
 
-main= undefined 
+--mcmfold (Cons x xs) = mcm1 x (fold mcm1 0 xs)
+
+
+--fold' agg cero n m  =
+
+ --   agg (fold' agg cero n) m
+
+--mcmfold m n = fold'  mcm1 m (n)
+
+
+fold agg cero Nil = cero
+fold agg cero (Cons x xs) =
+    agg (fold agg cero xs) x
+
+mcmAgregador estado x = mcm1 x estado
+
+mcmfold = fold mcmAgregador 1
+
+
+main= undefined
