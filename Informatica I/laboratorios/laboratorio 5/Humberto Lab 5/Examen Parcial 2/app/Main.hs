@@ -101,10 +101,8 @@ mcm n m l= mcmDos n m l multiplicaciónDe3Numeros multiplicaciónDe3Numeros
 
 
 
-
 mcmL1 Nil m = m
 mcmL1 (Cons x xs) m = mcmL1 xs (mcm1 x m)
-mcmL  num  = mcmL1 num 1
 
 
 
@@ -150,19 +148,6 @@ mcm1 n m = mcmAux n m (n * m) (n * m)
 --nuevamente la funcion minimo comun multiplo para listas.
 
 
---fold agg cero Nil = cero
---fold agg cero (Cons x xs) =
- --   agg (fold agg cero xs) x
-
-
---mcmfold (Cons x xs) = mcm1 x (fold mcm1 0 xs)
-
-
---fold' agg cero n m  =
-
- --   agg (fold' agg cero n) m
-
---mcmfold m n = fold'  mcm1 m (n)
 
 
 fold agg cero Nil = cero
