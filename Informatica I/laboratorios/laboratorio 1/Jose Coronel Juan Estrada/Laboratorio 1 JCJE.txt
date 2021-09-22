@@ -1,0 +1,39 @@
+1. Jose Gregorio Coronel Colombo
+2. Juan Pablo Estrada Lucero
+
+Laboratio #1:
+
+Ejercicio 1:
+Definicion inductiva para multiplicar numeros de peano
+
+1. a x b = b x a
+2. a x 2 = a+a
+3. a x s(b)= a + (a x b)
+4. a x s(0)= a 
+5. s(0) x b = b
+
+
+
+Ejercicio 2:
+
+Utilice el principio de induccion para demostrar:
+a+(b+c)=(a+b)+c
+
+1. 0+c=c
+2. a+0=a
+3. c+s(b)=s(c+b)
+4. a+s(b)=s(a+b)
+5. a+s(c)=s(c)+a
+
+b=0
+a+(0+c)=(a+0)+c
+a+c=a+c
+
+b=s(0)
+a+(s(0)+c)=(a+s(b))+c
+a+s(0+c)=(s(a+0))+c
+a+(s(c))=s(a)+c
+s(a+c)=s(a+c)
+
+
+
