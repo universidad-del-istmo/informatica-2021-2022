@@ -1,0 +1,82 @@
+--Implemente la funcion "maximo comun divisor" de tal forma que dicha funcion acepta tres numeros diferentes y
+--retorna el maximo comun divisor de esos tres numeros. El maximo comun divisor es el numero mas grande que puede
+--dividir de forma exacata a los tres numeros que se dio como parametro.
+
+--Ejemplo:
+
+--mcd3 20 25 30 == 5
+
+--mcd3 11 13 17 == 1
+
+--dicionalmente, elabore la reduccion de esta funcion para "mcd 2 4 6". Para brevedad, solo reduzca tres recursiones.
+
+mcd' a b c  = 
+    if a == b || b == a
+    then c
+    else if mod a (c + 1) == 0 && mod b (c + 1) == 0 
+    then mcd' a (c + 1) (c + 1)
+
+mcd :: Int -> Int -> Int
+mcd a b = mcd' a b 1 
+-- mcd 2 4 6 = 
+    -- a = 2 , b = 4, c = 6
+    -- mod 2 ( 6 + 1) == 0 && mod 4 ( 6 + 1 )= 0
+    -- mod 14 || mod 28
+
+
+
+--Implemente en Haskell la funcion maximo comun divisor de tal forma que dicha funcion acepte una lista de numeros 
+--y retorne el maximo comun divisor de los numeros en dicha lista. El maximo comun divisor es el numero mas grande 
+--que puede dividir de forma exacata a todos los numeros de la lista que se dio como parametro.
+
+--Ejemplo
+--mcdL (Cons 20 (Cons 25 (Cons 30 Nil))) == 5
+--mcdL (Cons 11 (Cons 13 (Cons 17 Nil))) == 1
+
+data Lista = Nil | Cons Int Lista deriving Show
+
+
+
+mcd' a b c  = Cons
+    if a == b || b == a
+    then c
+    else if mod a (c + 1) == 0 && mod b (c + 1) == 0 
+    then mcd' a (c + 1) (c + 1)
+
+mcd :: Int -> Int -> Int
+mcd a b = mcd' a b 1
+
+--Dada la siguiente funcion "mcd" que acepta dos numeros y produce el maximo comun divisor de los mismos:
+--mcdAux n m i d =
+ --if n == i || m == i
+ --then d
+ --else if mod n (i + 1) == 0 && mod m (i + 1) == 0
+ --then mcdAux n m (i + 1) (i + 1)
+ --else mcdAux n m (i + 1) d
+--mcd :: Int -> Int -> Int
+--mcd n m = mcdAux n m 1 1
+--Utilize esta funcion en conjunto con la funcion "fold" estudiada en clase para implementar nuevamente la funcion maximo comun divisor para listas.
+
+data Lista = Nil | Cons Int Lista deriving Show
+
+
+
+fold :: (estado -> Int -> estado) -> estado -> Lista -> estado
+
+fold agg cero Nil = cero
+
+fold agg cero (Cons x xs) =
+
+    agg (fold agg cero xs) x
+
+where
+
+mcdAux n m i d = fold
+ if n == i || m == i
+ then d
+ else if mod n (i + 1) == 0 && mod m (i + 1) == 0
+ then mcdAux n m (i + 1) (i + 1)
+ else mcdAux n m (i + 1) d
+
+mcd :: Int -> Int -> Int
+mcd n m = mcdAux n m 1 1
