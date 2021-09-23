@@ -7,7 +7,9 @@ import Prelude (
     Show,
     (-),
     (+),
-    undefined
+    undefined,
+    (*),
+    div
     )
 
 -- 1 -> (2 -> (3 -> (4 -> _ ) ) )
@@ -19,24 +21,50 @@ import Prelude (
 -- 2) agregar n al final
 -- 3) (3 -> 2 -> 1 -> _)
 
+<<<<<<< HEAD
+data Nat = Cero | Succ Nat
+
+-- 1 := Succ Cero
+-- 2 := Succ (Succ Cero)
+
+-- Int := (-2^63 - 2^63)
+data Lista = Cons Int Lista | Nil deriving Show
+=======
 data Lista = Nil | Cons Int Lista deriving Show
+>>>>>>> 91c033ab7db8229c87e19d966187c6527dcf157b
 
 -- range 3
 -- | n = 3
 -- = Cons 3 (range (3 - 1)) = Cons 3 (range 2)
 -- | n = 2
+<<<<<<< HEAD
+-- = Cons 3 (Cons 2 (Range (2 - 1))) = Cons 3 (Cons 2 (Range 1))
+-- | n = 1
+-- = Cons 3 (Cons 2 (Cons 1 (Range (1 - 1)))) = Cons 3 (Cons 2 (Cons 1 (Range 0)))
+-- | n = 0
+=======
 -- = Cons 3 (Cons 2 (range (2 - 1))) = Cons 3 (Cons 2 (range 1))
 -- | n = 1
 -- = Cons 3 (Cons 2 (Cons 1 (range (1 - 1)))) = Cons 3 (Cons 2 (Cons 1 (range 0)))
+>>>>>>> 91c033ab7db8229c87e19d966187c6527dcf157b
 -- = Cons 3 (Cons 2 (Cons 1 Nil))
 range 0 = Nil
 range n = Cons n (range (n - 1))
 
+<<<<<<< HEAD
+--Range' 3
+-- | n = 3
+-- = Cons 3 (range' (3 + 1)) = Cons 3 (range' 4)
+-- | n = 4
+-- = Cons 3 (Cons 4 (range ' (4 + 1))) = Cons 3 (Cons 4 (range ' 5))
+
+=======
 -- range' 3
 -- | n = 3
 -- = Cons 3 (range' (3 + 1)) = Cons 3 (range' 4)
 -- | n = 4
 -- = Cons 3 (Cons 4 (range' (4 + 1))) = Cons 3 (Cons 4 (range' 5))
+>>>>>>> 91c033ab7db8229c87e19d966187c6527dcf157b
 range' 0 = Nil
 range' n = Cons n (range' (n + 1))
 
