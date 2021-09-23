@@ -10,7 +10,9 @@ import Prelude (
     (-),
     (+),
     (*),
-    undefined
+    (==),
+    undefined,
+    mod
     )
 
 import GHC.Base (undefined)
@@ -55,8 +57,8 @@ contar (Cons n ns) = 1 + contar ns
 -- pero en vez de tener numeros (Int) como elementos, debe
 -- tener matrices de 2x2 como las que se utilizaron en el
 -- laboratorio anterior.
-data ListaTransformaciones = 
-    Conss ((Float, Float), (Float, Float))  ListaTransformaciones | Nil deriving Show
+data ListaTransformaciones =
+    Conss ((Float, Float), (Float, Float))  ListaTransformaciones | Nill deriving Show
 
 transformacionLineal :: ((Float, Float), (Float, Float)) -> (Float, Float) -> (Float, Float)
 transformacinLineal ((m11, m12 ), (m21, m22)) (x,y) = ((m11 * x) + (m12 * y), (m21 * x) + (m22 * y))
@@ -76,8 +78,8 @@ transformacinLineal ((m11, m12 ), (m21, m22)) (x,y) = ((m11 * x) + (m12 * y), (m
 -- actualizando el resultado cada vez que se aplica una
 -- transformacion.
 aplicarTransformaciones :: ListaTransformaciones -> (Float, Float) -> (Float, Float)
-aplicarTransformaciones Nil v = v 
-aplicarTransformaciones (Cons n ns) v = aplicarTransformaciones ns (transformacionLineal n v) 
+aplicarTransformaciones Nill v = v
+aplicarTransformaciones (Conss n ns) v = aplicarTransformaciones ns (transformacionLineal n v)
 
 -- Demostraciion 
 -- aplicarTransformaciones Nil v = v, indica que una lista vacia junto a un vector 
@@ -95,13 +97,10 @@ aplicarTransformaciones (Cons n ns) v = aplicarTransformaciones ns (transformaci
 -- ambas listas tienen los mismos valores en la misma posicion.
 sonIguales :: Lista -> Lista -> Bool
 sonIguales Nil Nil = True
-sonIguales (Cons n ns) ( Cons x xs) = 
-    if 
-        n == x 
-    then  
-        soniguales ns xs
-    else 
-        False 
+sonIguales (Cons n ns) ( Cons x xs) =
+    (
+    n == x) &&
+    soniguales ns xs
 
 -- Demotracion 
 -- sonIguales Nil Nil = True, se utiliza para que exista una comparacion entre dos listas
@@ -132,12 +131,12 @@ sonIguales (Cons n ns) ( Cons x xs) =
 -- Por ejemplo:
 -- sonEquivalentes 5 (Cons 1 (Cons 2 Nil)) (Cons 6 (Cons 7 Nil)) == True
 -- sonEquivalentes 3 (Cons 1 (Cons 2 Nil)) (Cons 6 (Cons 7 Nil)) == False 
-sumarLista :: Lista -> Int 
-sumarLista Nil = 0 
-sumarLista (Cons n ns) = n + sumarLista ns 
+sumarLista :: Lista -> Int
+sumarLista Nil = 0
+sumarLista (Cons n ns) = n + sumarLista ns
 sonEquivalentes :: Int -> Lista -> Lista -> Bool
-sonEquivalentes a l1 l2 =
-    mod (SumarLista l1) a == mod (sumarLista l2) a 
+sonEquivalentes a x1 x2 =
+    mod (sumarLista x1) a == mod (sumarLista x2) a
 
 -- demostracion 
 --  sumarLista Nill = 0 indica que una lista vacia tiene como resultado 0 
