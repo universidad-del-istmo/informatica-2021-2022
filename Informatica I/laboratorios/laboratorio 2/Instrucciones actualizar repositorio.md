@@ -10,7 +10,3 @@
     > git push
 5. Crear un branch para el laboratorio #2 y trabajar
     > git checkout -b lab2
-
-## Herramientas
-
-1. Para descomprimir el instalador de GHC puede utilizar 7-zip: 7-zip.org
