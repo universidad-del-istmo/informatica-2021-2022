@@ -65,4 +65,6 @@ esPrimo n = esPrimoAuxiliar n 2
 -- = True || (mod 5 5 /= 0 && esPrimoAuxiliar 5 (5 + 1)
 -- = True
 
+
+
 main = undefined
