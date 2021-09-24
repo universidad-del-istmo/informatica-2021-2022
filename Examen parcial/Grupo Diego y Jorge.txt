@@ -1,0 +1,61 @@
+Grupo: 
+Diego Jose Giron Figueroa
+Jorge Armando Ferguson Yaeggy
+
+------------- CORRECCION DE PARCIAL ------------
+
+-- PREGUNTA 1 -- 
+demostrar la siguiente ecuacion para todo natural de peano:
+succ 0 + n = succ n
+
+Respuesta
+
+n + 0 = n
+0 + m = m
+n + succ a = succ (n + a)
+
+succ 0 + 0 = succ 0
+
+con base (n = 0) 
+
+succ 0 + 0 = succ 0
+
+succ 0 + 0 = succ 0
+
+Caso inductivo:
+
+H.I. succ 0 + n = succ n
+
+succ 0 + (succ n) = succ (succ n)
+
+succ 0 + succ n = succ (succ 0 + n)
+
+succ (succ 0 + n) = succ (succ n)
+
+-- PREGUNTA 2 --
+
+0 > 0 = 0
+N > 0 = 1
+0 > M = 0
+SUCC A > SUCC B = A > B
+
+-- PREGUNTA 3 --
+
+esPar 0 = 1
+esPar 1 = 0
+esPar (succ a) = esImpar a
+
+esImpar 0 = 0
+esImpar 1 =1
+esImpar (succ a) = esPar a
+
+--PREGUNTA 4 --
+
+predecesor succ ( O ) = O
+
+predecesor succ ( a ) = a
+
+
+
+
+
