@@ -1,4 +1,4 @@
-# Revision history for Grupo-Andrea-Isabel
+# Revision history for laboratorio2
 
 ## 0.1.0.0 -- YYYY-mm-dd
 
