@@ -1,3 +1,10 @@
+--GRUPO FORMADO POR: 
+--JOSE HUMBERTO NAJAR VENAVENTE
+--MARIA FERNANDA ALVAREZ GARCIA
+
+--Este laboratorio fue resuelto en la semana misma asignada del laboratorio #6, por lo que sigue estando con las mismas 
+--estructuras con las que fue designada la tarea. 
+
 {-# LANGUAGE NoImplicitPrelude #-}
 
 module Main where
@@ -24,6 +31,7 @@ reverseAgregador estado x = pushBack x estado
 reverse' xs = fold reverseAgregador Nil xs
 reverse Nil = Nil
 reverse (Cons x xs) = pushBack x (reverse xs)
+
 -- Problema #1
 -- Utilize la funcion "fold" para implementar
 -- la funcion "fromDigits". Esta funcion debe
@@ -34,18 +42,7 @@ reverse (Cons x xs) = pushBack x (reverse xs)
 -- Ejemplo:
 -- fromDigits (Cons 1 (Cons 2 (Cons 3 Nil))) == 123
 
-
---convertirANumeroAux p Nil = 0 
---convertirAux p (Cons x xs) = x * p + convertirANumeroAux (p *10) xs 
---convertirANumero xs =convertirANumeroAux 1 (reverse xs)
-
---fromdigit Nil (resultado, n) = 0 
---fromDigitAgg (resultado, n) (Cons x xs) = x * n + fromDigitAgg (resultado, n*10) xs
---fromDigitAuxiliar n (Cons x xs) = fold fromDigitAgg (Nil, n) (Cons x xs)
-
---fromDigits :: Lista Int -> Int
---fromDigits Nil = 0
---fromDigits (Cons x xs) = fromDigitAuxiliar 1 (reverse (Cons x xs))
+--SOLUCIÓN AL PROBLEMA 1
 
 fromAdd (respuesta, n) x = (((x * n) + respuesta), (n * 10))
 fromDigits Nil = 0
@@ -60,6 +57,7 @@ fromDigits (Cons x xs) = fst (fold fromAdd (0,1) (Cons x xs))
 -- Ejemplo
 -- minMax (Cons 5 (Cons 2 (Cons 1 (Cons 10 (Cons 8 Nil))))) == (1, 10)
 
+-- SOLUCION AL PROBLEMA 2
 ifmayorque n m = 
     if n > m 
         then n 
@@ -89,6 +87,8 @@ compararInts a b = a >= b
 compararIntsInv a b = a <= b
 -- minMaxBy compararIntsInv (Cons 5 (Cons 2 (Cons 1 (Cons 10 (Cons 8 Nil))))) == (10, 1)
 
+
+--SOLUCIÓN PROBLEMA 3
 minMaxByAgg f (a, b) x = 
     (if f a x 
     then x
