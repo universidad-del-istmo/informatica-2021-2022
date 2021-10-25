@@ -1,3 +1,11 @@
+--Universidad del Istmo 
+--Laboratorio #6 
+--Grupo: 
+--Andrea Carolina Romero Cuellar 
+--Juan Pablo Estrada Lucero
+--Jose Gregorio Coronel Colombo 
+
+
 {-# LANGUAGE NoImplicitPrelude #-}
 
 module Main where
