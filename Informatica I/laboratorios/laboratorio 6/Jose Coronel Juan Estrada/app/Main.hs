@@ -2,6 +2,10 @@
 
 module Main where
 
+--JOSE GREGORIO CORONEL COLOMBO
+--JUAN PABLO ESTRADA LUCERO
+--ANDREA CAROLINA ROMERO CUELLAR
+
 import Prelude (Bool(..), Int, Show, undefined, (*), (+), (-), (<), (>), (==), (||), fst, snd, (>=), (<=))
 
 data Lista a = Cons a (Lista a) | Nil deriving Show
